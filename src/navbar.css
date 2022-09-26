@@ -1,0 +1,5 @@
+.arrow:hover{
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background-color: black;
+    opacity: 0.4;
+}
