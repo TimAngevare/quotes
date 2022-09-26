@@ -1,55 +1,79 @@
 import QuoteContainer from './QuoteContainer';
-import { useState } from 'react';
 import Corner from './Corner';
 import Topnav from './Topnav';
+import { Col, Container, Row, Button } from 'react-bootstrap';
+import UseScreenOrientation from './UseScreenOrientation';
+import { useEffect, useState } from 'react';
+import { db } from './Firebase';
+import { onSnapshot, collection } from 'firebase/firestore';
 
-function App() {
-  let dataChoice = {
-    barz : ["barz", "song", "bar", "artist"],
-    klem : ["klem", "naam", "quote"],
-    sp : ["sp", "naam", "quote"]
-  };
+const quoteStyle = {
+  margin: 0,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  msTransform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -50%)"
+};
 
+const dataChoice = {
+  barz : ["barz", "song", "bar", "artist"],
+  klem : ["klem", "naam", "quote"],
+  sp : ["sp", "naam", "quote"]
+};
+
+
+const App = () => {
   const [dataBase, setDataBase] = useState(dataChoice.barz);
+  const [barz, setbarz] = useState([{"bar" : "Loading...", "song" : " ", "artist" : " "}]);
+  const [ranInt, setRanInt] = useState(0);
+  
+  const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
-  const quoteStyle = {
-    margin: 0,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    msTransform: "translate(-50%, -50%)",
-    transform: "translate(-50%, -50%)"
+  const genRanInt = (length) => {
+    console.log(length);
+    if (typeof length === 'object') {
+        length = barz.length;
+        console.log(length);
+    }
+    const newInt = Math.floor(Math.random() * length);
+    setRanInt(newInt);
+    console.log("db: " + dataBase[0] + " num: " + ranInt);
+    console.log(barz[ranInt]);
   };
 
-  const handleDataBase = (e) => {
-    setDataBase(dataChoice[e.target.value]);
-
-  };
+  useEffect(() => {
+    onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
+      const res = snapshot.docs.map((doc) => doc.data());
+      console.log(res.length)
+      genRanInt(res.length);
+      setbarz(res);
+    });    
+  },[dataBase]);
 
   return (
-    <div>
-      <Topnav setDataBase={handleDataBase}/>
-      
-      <div style={{position : "fixed", left : 0, top: 0}}>
-        <Corner rotation="0"/>
-      </div>
-
-      <div style={{position : "fixed", right : "0%", top: 0}}>
+    <Container fluid>
+      <UseScreenOrientation/>
+      <Row>
+        <Corner rotation="0" />
+        <Col>
+          <Topnav setDataBase={handleDataBase}/>
+        </Col>
         <Corner rotation="90"/>
-      </div>
-      
-      <div style={quoteStyle}>
-        <QuoteContainer dataBase={dataBase}/>
-      </div>
-      
-      <div style={{position : "fixed", left : 0, bottom: 0}}>
-        <Corner rotation="270" />
-      </div>
+      </Row>
 
-      <div style={{position : "fixed", right : 10, bottom: 0}}>
-        <Corner rotation="180" />
-      </div>
-    </div>
+      <Row className=''>
+        <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
+      </Row>
+
+      <Row>
+        <Corner rotation="270" />
+        <Col className='text-center'>
+          <Button onClick={genRanInt}>Refresh</Button>
+        </Col>
+        <Corner rotation="180"/>
+      </Row>
+    </Container>
   );
 }
 
