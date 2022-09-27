@@ -6,7 +6,7 @@ export default function Corner(props) {
 
   const style = {
     transform: "rotate(" + props.rotation + "deg)",
-    width: "100%",
+    width: "90%",
     height: "auto",
   };
 
