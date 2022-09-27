@@ -55,11 +55,15 @@ const App = () => {
     <Container fluid>
       <UseScreenOrientation/>
       <Row>
-        <Corner rotation="0" />
+        <Col xs={2} lg={3} style={{padding : 0}}>
+          <Corner rotation="0" />
+        </Col>
         <Col>
           <Topnav setDataBase={handleDataBase}/>
         </Col>
-        <Corner rotation="90"/>
+        <Col xs={2} lg={3} style={{padding : 0}}>
+          <Corner rotation="90" className="pull-right"/>
+        </Col>
       </Row>
 
       <Row className=''>
@@ -67,11 +71,15 @@ const App = () => {
       </Row>
 
       <Row>
-        <Corner rotation="270"/>
+        <Col xs={2} lg={3} style={{padding : 0}} className="fixed-bottom">
+          <Corner rotation="270"/>
+        </Col>
         <Col className='text-center'>
           <Button onClick={genRanInt}>Refresh</Button>
         </Col>
-        <Corner rotation="180"/>
+        <Col xs={2} lg={3} style={{padding : 0, right: 0, position: "fixed", bottom : 0}} className="">
+          <Corner rotation="180"/>
+        </Col>
       </Row>
     </Container>
   );

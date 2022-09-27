@@ -11,9 +11,7 @@ export default function Corner(props) {
   };
 
   return (
-    <Col xs={2} lg={3}>
-      <CornerImg style={style} />
-    </Col>
+    <CornerImg style={style} />
   );
 
 }

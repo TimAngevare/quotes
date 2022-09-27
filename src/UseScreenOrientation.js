@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 const getOrientation = () =>
-  window.screen.orientation.type
+  window.screen.orientation;
 
 export default function UseScreenOrientation () {
   const [orientation, setOrientation] =
