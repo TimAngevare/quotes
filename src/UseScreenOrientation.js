@@ -1,33 +1,34 @@
 import {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 
-const getOrientation = () =>
-  window.screen.orientation;
+
 
 export default function UseScreenOrientation () {
+  let portrait = window.matchMedia("(orientation: portrait)");
   const [orientation, setOrientation] =
-    useState(getOrientation())
+    useState()
 
   const updateOrientation = event => {
-    setOrientation(getOrientation())
+    if (!event.matches){
+      setOrientation();
+    } else {
+      setOrientation("portrait")
+    }
   }
 
   useEffect(() => {
-    console.log("im being run!")
-    window.addEventListener(
-      'orientationchange',
-      updateOrientation
-    )
+    portrait.addEventListener("change", updateOrientation);
+    
     return () => {
-      window.removeEventListener(
-        'orientationchange',
+      portrait.removeEventListener(
+        'change',
         updateOrientation
-      )
+      );
     }
   }, [])
 
   return(
-    <Modal show={orientation == "portrait-secondary" || orientation == "portrait-primary"}>
+    <Modal show={orientation == "portrait"}>
       <Modal.Header>
         <Modal.Title>Tilt your phone</Modal.Title>
       </Modal.Header>
