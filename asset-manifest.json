@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/hiphopquotes/static/css/main.86c58bf7.css",
-    "main.js": "/hiphopquotes/static/js/main.978538a9.js",
+    "main.js": "/hiphopquotes/static/js/main.eddbd044.js",
     "static/js/787.43cbfe13.chunk.js": "/hiphopquotes/static/js/787.43cbfe13.chunk.js",
     "static/media/corner.svg": "/hiphopquotes/static/media/corner.602de3812878b0ca115d3acaeb4e3b33.svg",
     "index.html": "/hiphopquotes/index.html",
     "main.86c58bf7.css.map": "/hiphopquotes/static/css/main.86c58bf7.css.map",
-    "main.978538a9.js.map": "/hiphopquotes/static/js/main.978538a9.js.map",
+    "main.eddbd044.js.map": "/hiphopquotes/static/js/main.eddbd044.js.map",
     "787.43cbfe13.chunk.js.map": "/hiphopquotes/static/js/787.43cbfe13.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.86c58bf7.css",
-    "static/js/main.978538a9.js"
+    "static/js/main.eddbd044.js"
   ]
 }
