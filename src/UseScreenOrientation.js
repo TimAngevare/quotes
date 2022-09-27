@@ -17,6 +17,9 @@ export default function UseScreenOrientation () {
   }
 
   useEffect(() => {
+    if (portrait.matches){
+      setOrientation("portrait")
+    }
     portrait.addEventListener("change", updateOrientation);
     
     return () => {
