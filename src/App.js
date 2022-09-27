@@ -67,7 +67,7 @@ const App = () => {
       </Row>
 
       <Row>
-        <Corner rotation="270" />
+        <Corner rotation="270"/>
         <Col className='text-center'>
           <Button onClick={genRanInt}>Refresh</Button>
         </Col>
