@@ -1,17 +1,28 @@
 import React from "react";
-import { Route, Navigate, Routes } from 'react-router-dom';
-import { useAuth } from "./contexts/AuthContext";
+import {Navigate} from 'react-router-dom';
+import { auth } from './Firebase'
 
-export default function PrivateRoute({ component: Component, ...rest}){
-    const { currentUser } = useAuth();
+//...rest
+export default function PrivateRoute({ component: Component}){
+    const user = auth.currentUser;
+    var loggedIn = false;
+    console.log(Component)
+    console.log(loggedIn)
 
-    return(
-        <Routes>
-            <Route {...rest} render={props => {
-            return currentUser ? <Component {...props} /> : <Navigate replace to="/LoginPage" />
-        }}>
+    if (!user){
+        return <Navigate to="/LoginPage" replace />;
+    } else {
+        return Component
+    }
 
-            </Route>
-        </Routes>
-    );
+    // return(
+    //     // <Routes>
+    //     //     <Route {...rest} render={props => {
+    //     //     return loggedIn ? <App {...props} /> : <Navigate replace to="/LoginPage" />
+    //     // }}>
+
+    //     //     </Route>
+    //     // </Routes>
+        
+    // );
 }

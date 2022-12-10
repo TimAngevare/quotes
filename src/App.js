@@ -24,6 +24,7 @@ const dataChoice = {
 
 
 const App = () => {
+  console.log("App");
   const [dataBase, setDataBase] = useState(dataChoice.barz);
   const [barz, setbarz] = useState([{"bar" : "Loading...", "song" : " ", "artist" : " "}]);
   const [ranInt, setRanInt] = useState(0);

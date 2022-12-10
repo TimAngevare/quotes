@@ -27,6 +27,7 @@ export default function LoginPage() {
           const errorCode = error.code;
           const errorMessage = error.message;
           setError("error: " + errorCode + " " + errorMessage);
+          return null;
         });
         setLoading(false);
         history('/');

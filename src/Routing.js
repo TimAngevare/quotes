@@ -7,11 +7,12 @@ import LoginPage from "./LoginPage";
 import PrivateRoute from "./PrivateRoute";
 
 export default function Routing(){
+    console.log("Routing")
     return(
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path='/*' element={<PrivateRoute element={<App/>}/>}/>
+                    <Route exact path='/*' element={<PrivateRoute component={<App/>}/>}/>
                     <Route path="/LoginPage" element={<LoginPage/>}/>
                     <Route path="/SignupPage" element={<SignupPage/>}/>
                 </Routes>
