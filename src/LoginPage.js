@@ -1,15 +1,13 @@
-import { Alert } from "bootstrap";
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert} from 'react-bootstrap';
-import { useAuth } from './contexts/AuthContext';
+import { auth } from './Firebase'
+import {signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext';
 
 
 export default function LoginPage() {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -17,17 +15,21 @@ export default function LoginPage() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-       
-
-        try {
-            setError("");
-            setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value);
-            setLoading(false);
-            history.push('/');
-        } catch {
-            setError("Failed to login");
-        }
+        setError("");
+        setLoading(true);
+        signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError("error: " + errorCode + " " + errorMessage);
+        });
+        setLoading(false);
+        history.push('/');
     }
     return(
         <div>
@@ -41,7 +43,7 @@ export default function LoginPage() {
                             <Form.Control type="email" ref={emailRef} required/>
                         </Form.Group>
                         <Form.Group id="password">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
                         <Button disabled={loading} className="w-100" type="submit">Log In</Button>

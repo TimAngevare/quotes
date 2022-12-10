@@ -1,5 +1,4 @@
 import { ReactComponent as CornerImg } from './img/corner.svg';
-import Col from 'react-bootstrap/Col';
 
 
 export default function Corner(props) {

@@ -1,17 +1,16 @@
-import { Alert } from "bootstrap";
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert} from 'react-bootstrap';
-import { useAuth } from './contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+import { auth } from './Firebase'
+import {createUserWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignupPage() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmationRef = useRef();
-    const { singup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
+    const history = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -20,21 +19,27 @@ export default function SignupPage() {
             return setError("Passwords do not match")
         }
 
-        try {
-            setError("");
-            setLoading(true);
-            await singup(emailRef.current.value, passwordRef.current.value);
-            setLoading(false);
-            history.push('/');
-        } catch {
-            setError("Failed to create account");
-        }
+        
+        setError("");
+        setLoading(true);
+        await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+                // ...
+            }).catch((error) => {
+                setError("error: " + error.code + " " + error.message);
+                console.log(error.code);
+                console.log(error.message);
+                    // ..
+                });
+        setLoading(false);
+        history.push('/');
     }
     return(
         <div>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Sing up</h2>
+                    <h2 className="text-center mb-4">Signup here</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={ handleSubmit }>
                         <Form.Group id="email">
@@ -42,7 +47,7 @@ export default function SignupPage() {
                             <Form.Control type="email" ref={emailRef} required/>
                         </Form.Group>
                         <Form.Group id="password">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
                         <Form.Group id="password-confirm">
