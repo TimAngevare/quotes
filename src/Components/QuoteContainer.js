@@ -1,5 +1,4 @@
 import Quote from './Quote';
-import Button from 'react-bootstrap/Button';
 
 //s
 

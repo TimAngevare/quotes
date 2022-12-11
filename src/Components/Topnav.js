@@ -3,9 +3,9 @@ import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
-import './navbar.css';
+import '../navbar.css';
 import {signOut } from "firebase/auth";
-import { auth } from './Firebase'
+import { auth } from '../Firebase'
 import {useNavigate } from 'react-router-dom';
 
 

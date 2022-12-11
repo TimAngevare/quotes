@@ -1,4 +1,4 @@
-import { ReactComponent as CornerImg } from './img/corner.svg';
+import { ReactComponent as CornerImg } from '../img/corner.svg';
 
 
 export default function Corner(props) {

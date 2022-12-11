@@ -4,7 +4,7 @@ import Topnav from './Topnav';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import UseScreenOrientation from './UseScreenOrientation';
 import { useEffect, useState } from 'react';
-import { db } from './Firebase';
+import { db } from '../Firebase';
 import { onSnapshot, collection } from 'firebase/firestore';
 
 const quoteStyle = {
