@@ -4,13 +4,27 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 import './navbar.css';
+import {signOut } from "firebase/auth";
+import { auth } from './Firebase'
+import {useNavigate } from 'react-router-dom';
+
 
 function OffCanvasExample({ name, ...props }) {
+  const history = useNavigate();
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleSignOut = (e) => {
+    handleClose();
+    signOut(auth).then(() => {
+      history('/LoginPage')
+    }).catch((error) => {
+      alert(error);
+    });
+  }
   const handleClick = (e) => {
     handleClose();
     props.function(e);
@@ -40,11 +54,16 @@ function OffCanvasExample({ name, ...props }) {
         <Offcanvas.Header closeButton>
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
-          <ButtonGroup style={{width : "100%"}}>
-            <Button size="lg" variant="dark" value="barz" onClick={handleClick}>Hip Hop</Button>
-            <Button size="lg" type="button" value="klem" onClick={handleClick} variant="dark">K1em</Button>
-            <Button size="lg" type="button" value="sp" onClick={handleClick} variant="dark">SP</Button>
-          </ButtonGroup>
+          <Row>
+            <ButtonGroup style={{width : "100%"}}>
+              <Button size="lg" variant="dark" value="barz" onClick={handleClick}>Hip Hop</Button>
+              <Button size="lg" type="button" value="klem" onClick={handleClick} variant="dark">K1em</Button>
+              <Button size="lg" type="button" value="sp" onClick={handleClick} variant="dark">SP</Button>
+            </ButtonGroup>
+          </Row>
+          <Row>
+            <Button onClick={handleSignOut}>Sign Out</Button>
+          </Row>
         </Offcanvas.Body>
       </Offcanvas>
     </>
