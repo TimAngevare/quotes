@@ -1,10 +1,29 @@
+import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import { db } from '../Firebase';
+import { collection, addDoc } from "firebase/firestore"; 
 
 export default function NewQuote () {
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const textRef = useRef();
+    const authorRef = useRef();
+    const [loading, setLoading] = useState(false);
     
     async function handleSubmit(e){
-        console.log('hi');
+        e.preventDefault();
+        const user = window.localStorage.getItem('user');
+        setLoading(true);
+        const docRef = await addDoc(collection(db, user), {
+            quote: textRef.current.value,
+            author: authorRef.current.value
+          });
+        setLoading(false);
+        console.log("Document written with ID: ", docRef);
     }
 
     return (

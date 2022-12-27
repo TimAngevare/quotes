@@ -7,7 +7,7 @@ import LoginPage from "./LoginPage";
 import PrivateRoute from "./PrivateRoute";
 
 export default function Routing(){
-    console.log("Routing")
+    //console.log("Routing")
     return(
         <Router>
             <AuthProvider>

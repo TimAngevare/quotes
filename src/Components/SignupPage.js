@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert} from 'react-bootstrap';
 import { auth } from '../Firebase'
+import { db } from '../Firebase'
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,7 +25,8 @@ export default function SignupPage() {
         setLoading(true);
         await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then((userCredential) => {
             // Signed in 
-            const user = userCredential.user;
+            const user = userCredential.user.email
+            window.localStorage.setItem('user', user);
                 // ...
             }).catch((error) => {
                 setError("error: " + error.code + " " + error.message);

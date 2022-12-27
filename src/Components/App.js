@@ -6,6 +6,7 @@ import UseScreenOrientation from './UseScreenOrientation';
 import { useEffect, useState } from 'react';
 import { db } from '../Firebase';
 import { onSnapshot, collection } from 'firebase/firestore';
+import NewQuote from './NewQuote';
 
 const quoteStyle = {
   margin: 0,
@@ -24,29 +25,32 @@ const dataChoice = {
 
 
 const App = () => {
-  console.log("App");
+  //console.log("App");
+  //console.log("user is: ", window.localStorage.getItem('user'));
+  const [shown, setShown] = useState(false);
   const [dataBase, setDataBase] = useState(dataChoice.barz);
   const [barz, setbarz] = useState([{"bar" : "Loading...", "song" : " ", "artist" : " "}]);
   const [ranInt, setRanInt] = useState(0);
   
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
+  const handleShown = (e) => {
+    setShown(true);
+    console.log("Im being run")
+  }
+
   const genRanInt = (length) => {
-    console.log(length);
     if (typeof length === 'object') {
         length = barz.length;
         console.log(length);
     }
     const newInt = Math.floor(Math.random() * length);
     setRanInt(newInt);
-    console.log("db: " + dataBase[0] + " num: " + ranInt);
-    console.log(barz[ranInt]);
   };
 
   useEffect(() => {
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
       const res = snapshot.docs.map((doc) => doc.data());
-      console.log(res.length)
       genRanInt(res.length);
       setbarz(res);
     });    
@@ -54,13 +58,14 @@ const App = () => {
 
   return (
     <Container fluid>
+      { shown && <NewQuote/>}
       <UseScreenOrientation/>
       <Row>
         <Col xs={2} lg={3} style={{padding : 0}}>
           <Corner rotation="0" />
         </Col>
         <Col>
-          <Topnav setDataBase={handleDataBase}/>
+          <Topnav setDataBase={handleDataBase} shown={handleShown}/>
         </Col>
         <Col xs={2} lg={3} style={{padding : 0}}>
           <Corner rotation="90" className="pull-right"/>

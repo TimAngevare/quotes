@@ -9,7 +9,7 @@ import { auth } from '../Firebase'
 import {useNavigate } from 'react-router-dom';
 
 
-function OffCanvasExample({ name, ...props }) {
+function OffCanvasExample({ name, shown, ...props }) {
   const history = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -63,6 +63,7 @@ function OffCanvasExample({ name, ...props }) {
           </Row>
           <Row>
             <Button onClick={handleSignOut}>Sign Out</Button>
+            <Button onClick={shown}>Add new</Button>
           </Row>
         </Offcanvas.Body>
       </Offcanvas>
@@ -74,7 +75,7 @@ export default function Topnav(props) {
   return (
     <>
       {['top'].map((placement, idx) => (
-        <OffCanvasExample key={idx} placement={placement} name={placement} function={props.setDataBase} />
+        <OffCanvasExample shown={props.shown} key={idx} placement={placement} name={placement} function={props.setDataBase} />
       ))}
     </>
   );

@@ -6,8 +6,6 @@ import { auth } from '../Firebase'
 export default function PrivateRoute({ component: Component}){
     const user = auth.currentUser;
     var loggedIn = false;
-    console.log(Component)
-    console.log(loggedIn)
 
     if (!user){
         return <Navigate to="/LoginPage" replace />;

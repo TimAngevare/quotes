@@ -20,7 +20,7 @@ export default function LoginPage() {
         signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
         .then((userCredential) => {
           // Signed in 
-          const user = userCredential.user;
+          window.localStorage.setItem('user', userCredential.user.email);
           // ...
         })
         .catch((error) => {
