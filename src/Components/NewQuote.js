@@ -5,14 +5,18 @@ import Form from 'react-bootstrap/Form';
 import { db } from '../Firebase';
 import { collection, addDoc } from "firebase/firestore"; 
 
-export default function NewQuote () {
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+export default function NewQuote (props) {
+    const styles = {
+        paddingTop : 10,
+        paddingBottom : 10
     }
-
     const textRef = useRef();
     const authorRef = useRef();
     const [loading, setLoading] = useState(false);
+
+    const handleClose = (e) => {
+        props.shown();
+    }
     
     async function handleSubmit(e){
         e.preventDefault();
@@ -28,11 +32,11 @@ export default function NewQuote () {
 
     return (
         <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-            <Modal.Dialog>
-                <Modal.Header closeButton>Add quote</Modal.Header>
+            <Modal.Dialog onHide={handleClose}>
+                <Modal.Header>Add quote</Modal.Header>
                 
                 <Modal.Body>
-                    <Form onSubmit={ handleSubmit }>
+                    <Form onSubmit={ handleSubmit} >
                         <Form.Group id="text">
                             <Form.Label>Quote</Form.Label>
                             <Form.Control type="text" ref={textRef} required/>
@@ -41,7 +45,8 @@ export default function NewQuote () {
                             <Form.Label>Author</Form.Label>
                             <Form.Control type="text" ref={authorRef} required/>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Save</Button>
+                        <Button style={styles} disabled={loading} className="w-100" type="submit">Save</Button>
+                        <Button style={styles} disabled={loading} className="w-100" variant="secondary" onClick={handleClose}>Close</Button>
                     </Form>
                 </Modal.Body>
             </Modal.Dialog>

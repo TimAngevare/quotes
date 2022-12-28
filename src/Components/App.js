@@ -8,14 +8,12 @@ import { db } from '../Firebase';
 import { onSnapshot, collection } from 'firebase/firestore';
 import NewQuote from './NewQuote';
 
-const quoteStyle = {
-  margin: 0,
+const styles ={ cardStyle : {
   position: "absolute",
-  top: "50%",
-  left: "50%",
-  msTransform: "translate(-50%, -50%)",
-  transform: "translate(-50%, -50%)"
-};
+  top: "20%",
+  right: "30%",
+  width: "40%"
+}};
 
 const dataChoice = {
   barz : ["barz", "song", "bar", "artist"],
@@ -35,8 +33,7 @@ const App = () => {
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
   const handleShown = (e) => {
-    setShown(true);
-    console.log("Im being run")
+    setShown(!shown);
   }
 
   const genRanInt = (length) => {
@@ -57,37 +54,42 @@ const App = () => {
   },[dataBase]);
 
   return (
-    <Container fluid>
-      { shown && <NewQuote/>}
-      <UseScreenOrientation/>
-      <Row>
-        <Col xs={2} lg={3} style={{padding : 0}}>
-          <Corner rotation="0" />
-        </Col>
-        <Col>
-          <Topnav setDataBase={handleDataBase} shown={handleShown}/>
-        </Col>
-        <Col xs={2} lg={3} style={{padding : 0}}>
-          <Corner rotation="90" className="pull-right"/>
-        </Col>
-      </Row>
+    <div>
+      <div style={styles.cardStyle} id='wrapper'>
+        { shown && <NewQuote shown={handleShown}/>}
+      </div>
+      <Container fluid>
+        <UseScreenOrientation/>
+        <Row>
+          <Col xs={2} lg={3} style={{padding : 0}}>
+            <Corner rotation="0" />
+          </Col>
+          <Col>
+            <Topnav setDataBase={handleDataBase} shown={handleShown}/>
+          </Col>
+          <Col xs={2} lg={3} style={{padding : 0}}>
+            <Corner rotation="90" className="pull-right"/>
+          </Col>
+        </Row>
 
-      <Row className=''>
-        <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
-      </Row>
+        <Row className=''>
+          <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
+        </Row>
 
-      <Row>
-        <Col xs={2} lg={3} style={{padding : 0}} className="fixed-bottom">
-          <Corner rotation="270"/>
-        </Col>
-        <Col className='text-center'>
-          <Button onClick={genRanInt}>Refresh</Button>
-        </Col>
-        <Col xs={2} lg={3} style={{padding : 0, right: 0, position: "fixed", bottom : 0}} className="">
-          <Corner rotation="180"/>
-        </Col>
-      </Row>
-    </Container>
+        <Row>
+          <Col xs={2} lg={3} style={{padding : 0}} className="fixed-bottom">
+            <Corner rotation="270"/>
+          </Col>
+          <Col className='text-center'>
+            <Button onClick={genRanInt}>Refresh</Button>
+          </Col>
+          <Col xs={2} lg={3} style={{padding : 0, right: 0, position: "fixed", bottom : 0}} className="">
+            <Corner rotation="180"/>
+          </Col>
+        </Row>
+      </Container>
+
+    </div>
   );
 }
 
