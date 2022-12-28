@@ -18,7 +18,8 @@ const styles ={ cardStyle : {
 const dataChoice = {
   barz : ["barz", "song", "bar", "artist"],
   klem : ["klem", "naam", "quote"],
-  sp : ["sp", "naam", "quote"]
+  sp : ["sp", "naam", "quote"],
+  user : [window.localStorage.getItem('user'), "author", "quote"]
 };
 
 
@@ -26,10 +27,10 @@ const App = () => {
   //console.log("App");
   //console.log("user is: ", window.localStorage.getItem('user'));
   const [shown, setShown] = useState(false);
-  const [dataBase, setDataBase] = useState(dataChoice.barz);
-  const [barz, setbarz] = useState([{"bar" : "Loading...", "song" : " ", "artist" : " "}]);
+  const [dataBase, setDataBase] = useState(dataChoice.user);
+  const [barz, setbarz] = useState([{"quote" : "You have not added any quotes yet.", "author" : "Tim"}]);
   const [ranInt, setRanInt] = useState(0);
-  
+
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
   const handleShown = (e) => {
@@ -48,8 +49,11 @@ const App = () => {
   useEffect(() => {
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
       const res = snapshot.docs.map((doc) => doc.data());
-      genRanInt(res.length);
-      setbarz(res);
+      if (res != undefined && res.length != 0) {
+        console.log("im running")
+        genRanInt(res.length);
+        setbarz(res);
+      }
     });    
   },[dataBase]);
 
@@ -73,6 +77,13 @@ const App = () => {
         </Row>
 
         <Row className=''>
+          <QuoteContainer dataBase={dataBase} quote={(() => {
+            if (barz.length > 1) {
+              return(barz[ranInt]);
+            } else {
+              return(barz[0]);
+            }
+          })} />
           <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
         </Row>
 

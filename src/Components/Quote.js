@@ -18,8 +18,9 @@ export default function Quote ( props ) {
   
     return (
         <div>
+            {/* <p>{JSON.stringify(props.quote)}</p> */}
             <h1 style={styles.barStyle}>{props.quote[props.dataBase[2]]}</h1>
-            <h3 style={styles.song}>- <em style={styles.artist}>{props.quote[props.dataBase[1]]}</em>{props.dataBase.length > 3 && <em>: {props.quote[props.dataBase[3]]}</em>}</h3>
+            <h3 style={styles.song}> <em style={styles.artist}>- {props.quote[props.dataBase[1]]}</em>{props.dataBase.length > 3 && <em>: {props.quote[props.dataBase[3]]}</em>}</h3>
         </div>
     );
   }

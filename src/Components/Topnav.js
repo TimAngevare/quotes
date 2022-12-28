@@ -55,15 +55,13 @@ function OffCanvasExample({ name, shown, ...props }) {
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
           <Row>
-            {/* <ButtonGroup style={{width : "100%"}}>
-              <Button size="lg" variant="dark" value="barz" onClick={handleClick}>Hip Hop</Button>
+            <ButtonGroup style={{width : "100%"}}>
+              <Button onClick={handleSignOut}>Sign Out</Button>
+              <Button onClick={shown}>Add Quote</Button>
+              {/* <Button size="lg" variant="dark" value="barz" onClick={handleClick}>Hip Hop</Button>
               <Button size="lg" type="button" value="klem" onClick={handleClick} variant="dark">K1em</Button>
-              <Button size="lg" type="button" value="sp" onClick={handleClick} variant="dark">SP</Button>
-            </ButtonGroup> */}
-          </Row>
-          <Row>
-            <Button onClick={handleSignOut}>Sign Out</Button>
-            <Button onClick={shown}>Add Quote</Button>
+              <Button size="lg" type="button" value="sp" onClick={handleClick} variant="dark">SP</Button> */}
+            </ButtonGroup>
           </Row>
         </Offcanvas.Body>
       </Offcanvas>
