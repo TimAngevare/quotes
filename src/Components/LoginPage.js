@@ -3,9 +3,13 @@ import { Form, Button, Card, Alert} from 'react-bootstrap';
 import { auth } from '../Firebase'
 import {signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
+import Wave from "./Wave";
 
 
 export default function LoginPage() {
+    const styles = {
+
+    }
     const emailRef = useRef();
     const passwordRef = useRef();
     const [error, setError] = useState("");
@@ -43,7 +47,7 @@ export default function LoginPage() {
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required/>
                         </Form.Group>
-                        <Form.Group id="password">
+                        <Form.Group id="password" className="mb-3">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
@@ -54,6 +58,7 @@ export default function LoginPage() {
             <div className="w-100 text-center mt-2">
                 Don't have an account? <Link to="/SignupPage">Sign up!</Link>
             </div>
+            <Wave/>
         </div>
     );
 }

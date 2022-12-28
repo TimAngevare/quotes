@@ -50,7 +50,6 @@ const App = () => {
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
       const res = snapshot.docs.map((doc) => doc.data());
       if (res != undefined && res.length != 0) {
-        console.log("im running")
         genRanInt(res.length);
         setbarz(res);
       }

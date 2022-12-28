@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert} from 'react-bootstrap';
 import { auth } from '../Firebase'
-import { db } from '../Firebase'
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
+import Wave from "./Wave";
 
 export default function SignupPage() {
     const emailRef = useRef();
@@ -52,17 +52,18 @@ export default function SignupPage() {
                             <Form.Label>password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
-                        <Form.Group id="password-confirm">
+                        <Form.Group id="password-confirm" className="mb-3">
                             <Form.Label>Password confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmationRef} required/>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                        <Button disabled={loading} className="w-50 " type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
                 Already have an account? <Link to="/LoginPage">Log In</Link>
             </div>
+            <Wave/>
         </div>
     );
 }
