@@ -16,7 +16,7 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const history = useNavigate();
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
 
         setError("");
@@ -27,14 +27,16 @@ export default function LoginPage() {
           window.localStorage.setItem('user', userCredential.user.email);
           // ...
         })
+        .then(() => {
+            setLoading(false);
+            history('/');
+        })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setError("error: " + errorCode + " " + errorMessage);
           return null;
         });
-        setLoading(false);
-        history('/');
     }
     return(
         <div>
