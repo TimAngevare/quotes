@@ -1,21 +1,34 @@
 import React, { useState } from 'react';
 import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 import '../navbar.css';
 import {signOut } from "firebase/auth";
 import { auth } from '../Firebase'
-import {useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
 function OffCanvasExample({ name, shown, ...props }) {
   const history = useNavigate();
 
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
+  async function share(){
+    setShowAlert(true);
+    navigator.clipboard.writeText(document.location.href + "?user=" + window.localStorage.getItem("user"));
+    await sleep(1000);
+    setShowAlert(false);
+  };
 
   const handleSignOut = (e) => {
     handleClose();
@@ -25,10 +38,12 @@ function OffCanvasExample({ name, shown, ...props }) {
       alert(error);
     });
   }
-  const handleClick = (e) => {
+  const changeBarz = (e) => {
     handleClose();
-    props.function(e);
-  };
+    history('/?user=barz');
+    window.location.reload();
+  }
+
 
   return (
     <>
@@ -55,12 +70,16 @@ function OffCanvasExample({ name, shown, ...props }) {
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
           <Row>
-            <ButtonGroup style={{width : "100%"}}>
+            <Alert show={showAlert} key="primary" variant="primary">
+              Share link copied to clipboard!
+            </Alert>
+          </Row>
+          <Row>
+            <ButtonGroup style={{width : "100%", height : "50%"}}>
               <Button onClick={handleSignOut}>Sign Out</Button>
               <Button onClick={shown}>Add Quote</Button>
-              {/* <Button size="lg" variant="dark" value="barz" onClick={handleClick}>Hip Hop</Button>
-              <Button size="lg" type="button" value="klem" onClick={handleClick} variant="dark">K1em</Button>
-              <Button size="lg" type="button" value="sp" onClick={handleClick} variant="dark">SP</Button> */}
+              <Button onClick={share}>Share!</Button>
+              <Button onClick={changeBarz}>Barz</Button>
             </ButtonGroup>
           </Row>
         </Offcanvas.Body>

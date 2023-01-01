@@ -31,6 +31,7 @@ const App = () => {
   const [ranInt, setRanInt] = useState(0);
 
   const [dataBase, setDataBase] = useState(() => {
+    console.log(searchParams.get("user"));
     if (searchParams.get("user") != null && searchParams.get("user") != "barz") {
       return dataChoice.getUser[0] = searchParams.get("user");
     } else if (searchParams.get("user") != null) {
