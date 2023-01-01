@@ -87,13 +87,6 @@ const App = () => {
         </Row>
 
         <Row className=''>
-          <QuoteContainer dataBase={dataBase} quote={(() => {
-            if (barz.length > 1) {
-              return(barz[ranInt]);
-            } else {
-              return(barz[0]);
-            }
-          })} />
           <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
         </Row>
 

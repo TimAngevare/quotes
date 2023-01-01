@@ -1,4 +1,4 @@
-export default function Quote ( props ) {
+export default function Quote(props) {
     const styles = { "barStyle" : {
         fontFamily: "'Brush Script MT', cursive",
         color: "rgb(97,127,177)",
