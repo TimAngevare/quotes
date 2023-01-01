@@ -25,7 +25,7 @@ function OffCanvasExample({ name, shown, ...props }) {
 
   async function share(){
     setShowAlert(true);
-    navigator.clipboard.writeText(document.location.href + "?user=" + window.localStorage.getItem("user"));
+    navigator.clipboard.writeText(document.location.href + "public?user=" + window.localStorage.getItem("user"));
     await sleep(2000);
     setShowAlert(false);
   };
@@ -40,7 +40,7 @@ function OffCanvasExample({ name, shown, ...props }) {
   }
   const changeBarz = (e) => {
     handleClose();
-    history('/?user=barz');
+    history('/public?user=barz');
     window.location.reload();
   }
 

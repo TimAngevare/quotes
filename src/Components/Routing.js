@@ -1,21 +1,20 @@
 import React from "react";
 import { AuthProvider } from "../contexts/AuthContext";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import SignupPage from "./SignupPage";
 import App from "./App";
 import LoginPage from "./LoginPage";
 import PrivateRoute from "./PrivateRoute";
 
 export default function Routing(){
-    //console.log("Routing")
     return(
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route path='/*' element={<PrivateRoute component={<App/>}/>}/>
+                    <Route exact path='/' element={<PrivateRoute component={<App/>}/>}/>
                     <Route path="/LoginPage" element={<LoginPage/>}/>
                     <Route path="/SignupPage" element={<SignupPage/>}/>
-                    {/* <Route exact path="/:Username" component={App}/> */}
+                    <Route path="/public" element={<App/>}/>
                 </Routes>
             </AuthProvider>
         </Router>
