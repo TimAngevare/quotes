@@ -26,7 +26,7 @@ export default function SignupPage() {
         await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then((userCredential) => {
             // Signed in 
             const user = userCredential.user.email
-            window.localStorage.setItem('user', user);
+            window.localStorage.setItem('user', user.split("@")[0]);
                 // ...
             }).catch((error) => {
                 setError("error: " + error.code + " " + error.message);

@@ -12,9 +12,10 @@ export default function Routing(){
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path='/*' element={<PrivateRoute component={<App/>}/>}/>
+                    <Route path='/*' element={<PrivateRoute component={<App/>}/>}/>
                     <Route path="/LoginPage" element={<LoginPage/>}/>
                     <Route path="/SignupPage" element={<SignupPage/>}/>
+                    {/* <Route exact path="/:Username" component={App}/> */}
                 </Routes>
             </AuthProvider>
         </Router>

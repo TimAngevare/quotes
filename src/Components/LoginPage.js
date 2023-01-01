@@ -24,7 +24,7 @@ export default function LoginPage() {
         signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
         .then((userCredential) => {
           // Signed in 
-          window.localStorage.setItem('user', userCredential.user.email);
+          window.localStorage.setItem('user', userCredential.user.email.split("@")[0]);
           // ...
         })
         .then(() => {

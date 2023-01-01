@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import QuoteContainer from './QuoteContainer';
 import Corner from './Corner';
 import Topnav from './Topnav';
@@ -17,19 +18,27 @@ const styles ={ cardStyle : {
 
 const dataChoice = {
   barz : ["barz", "song", "bar", "artist"],
-  klem : ["klem", "naam", "quote"],
-  sp : ["sp", "naam", "quote"],
-  user : [window.localStorage.getItem('user'), "author", "quote"]
+  user : [window.localStorage.getItem('user'), "author", "quote"],
+  getUser : [null, "author", "quote"]
 };
 
 
 const App = () => {
-  //console.log("App");
-  //console.log("user is: ", window.localStorage.getItem('user'));
+
+  const [searchParams, setSearchParams] = useSearchParams();
   const [shown, setShown] = useState(false);
-  const [dataBase, setDataBase] = useState(dataChoice.user);
   const [barz, setbarz] = useState([{"quote" : "You have not added any quotes yet.", "author" : "Tim"}]);
   const [ranInt, setRanInt] = useState(0);
+
+  const [dataBase, setDataBase] = useState(() => {
+    if (searchParams.get("user") != null && searchParams.get("user") != "barz") {
+      return dataChoice.getUser[0] = searchParams.get("user");
+    } else if (searchParams.get("user") != null) {
+      return dataChoice.barz;
+    } else {
+      return dataChoice.user;
+    }
+  });
 
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
@@ -68,7 +77,9 @@ const App = () => {
             <Corner rotation="0" />
           </Col>
           <Col>
-            <Topnav setDataBase={handleDataBase} shown={handleShown}/>
+            {searchParams.get("user") === null &&
+              <Topnav setDataBase={handleDataBase} shown={handleShown}/>
+            }
           </Col>
           <Col xs={2} lg={3} style={{padding : 0}}>
             <Corner rotation="90" className="pull-right"/>
