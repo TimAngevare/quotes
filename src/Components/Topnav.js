@@ -26,7 +26,7 @@ function OffCanvasExample({ name, shown, ...props }) {
   async function share(){
     setShowAlert(true);
     navigator.clipboard.writeText(document.location.href + "?user=" + window.localStorage.getItem("user"));
-    await sleep(1000);
+    await sleep(2000);
     setShowAlert(false);
   };
 
@@ -64,16 +64,13 @@ function OffCanvasExample({ name, shown, ...props }) {
   />
   </svg>
       </Row>
-      
       <Offcanvas show={show} onHide={handleClose} {...props}>
+        <Alert show={showAlert} key="primary" variant="primary">
+          Share link copied to clipboard!
+        </Alert>
         <Offcanvas.Header closeButton>
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
-          <Row>
-            <Alert show={showAlert} key="primary" variant="primary">
-              Share link copied to clipboard!
-            </Alert>
-          </Row>
           <Row>
             <ButtonGroup style={{width : "100%", height : "50%"}}>
               <Button onClick={handleSignOut}>Sign Out</Button>
