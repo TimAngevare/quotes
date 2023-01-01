@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert} from 'react-bootstrap';
 import { auth } from '../Firebase'
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../img/Quotes.png';
 import Wave from "./Wave";
 
 export default function SignupPage() {
@@ -35,13 +36,16 @@ export default function SignupPage() {
                     // ..
                 });
         setLoading(false);
-        history.push('/');
+        history('/');
     }
     return(
         <div>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Signup here</h2>
+                    <div>
+                        <img src={logo} style={{width : "10%", height : "auto", display : "block", marginLeft : "auto", marginRight : "auto", paddingBottom : 20}}/>
+                    </div>
+                    <h2 className="text-center mb-4">Sign up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={ handleSubmit }>
                         <Form.Group id="email">
@@ -49,14 +53,14 @@ export default function SignupPage() {
                             <Form.Control type="email" ref={emailRef} required/>
                         </Form.Group>
                         <Form.Group id="password">
-                            <Form.Label>password</Form.Label>
+                            <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
                         <Form.Group id="password-confirm" className="mb-3">
                             <Form.Label>Password confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmationRef} required/>
                         </Form.Group>
-                        <Button disabled={loading} className="w-50 " type="submit">Sign Up</Button>
+                        <Button disabled={loading} className="w-100 " type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>
             </Card>

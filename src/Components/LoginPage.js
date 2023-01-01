@@ -4,6 +4,7 @@ import { auth } from '../Firebase'
 import {signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import Wave from "./Wave";
+import logo from '../img/Quotes.png';
 
 
 export default function LoginPage() {
@@ -42,6 +43,9 @@ export default function LoginPage() {
         <div>
             <Card>
                 <Card.Body>
+                    <div>
+                        <img src={logo} style={{width : "10%", height : "auto", display : "block", marginLeft : "auto", marginRight : "auto", paddingBottom : 20}}/>
+                    </div>
                     <h2 className="text-center mb-4">Log In</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={ handleSubmit }>
