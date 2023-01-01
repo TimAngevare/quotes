@@ -32,7 +32,7 @@ export default function NewQuote (props) {
 
     return (
         <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-            <Modal.Dialog onHide={handleClose}>
+            <Modal.Dialog>
                 <Modal.Header>Add quote</Modal.Header>
                 
                 <Modal.Body>
@@ -45,8 +45,10 @@ export default function NewQuote (props) {
                             <Form.Label>Author</Form.Label>
                             <Form.Control type="text" ref={authorRef} required/>
                         </Form.Group>
-                        <Button style={styles} disabled={loading} className="w-100" type="submit">Save</Button>
-                        <Button style={styles} disabled={loading} className="w-100" variant="secondary" onClick={handleClose}>Close</Button>
+                        <Form.Group>
+                            <Button style={styles} disabled={loading} className="w-100" type="submit">Save</Button>
+                            <Button style={styles} disabled={loading} className="w-100" variant="secondary" onClick={handleClose}>Close</Button>
+                        </Form.Group>
                     </Form>
                 </Modal.Body>
             </Modal.Dialog>

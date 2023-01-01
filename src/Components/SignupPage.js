@@ -28,6 +28,7 @@ export default function SignupPage() {
             // Signed in 
             const user = userCredential.user.email
             window.localStorage.setItem('user', user.split("@")[0]);
+            history('/');
                 // ...
             }).catch((error) => {
                 setError("error: " + error.code + " " + error.message);
@@ -36,7 +37,6 @@ export default function SignupPage() {
                     // ..
                 });
         setLoading(false);
-        history('/');
     }
     return(
         <div>

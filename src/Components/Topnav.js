@@ -72,7 +72,7 @@ function OffCanvasExample({ name, shown, ...props }) {
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
           <Row>
-            <ButtonGroup style={{width : "100%", height : "50%"}}>
+            <ButtonGroup style={{width : "100%", height : "60%"}}>
               <Button onClick={handleSignOut}>Sign Out</Button>
               <Button onClick={shown}>Add Quote</Button>
               <Button onClick={share}>Share!</Button>
