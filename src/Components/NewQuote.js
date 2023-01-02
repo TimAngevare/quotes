@@ -7,9 +7,10 @@ import { collection, addDoc } from "firebase/firestore";
 
 export default function NewQuote (props) {
     const styles = {
-        paddingTop : 10,
-        paddingBottom : 10
+        padding : '10px',
+        marginBottom : '10px'
     }
+
     const textRef = useRef();
     const authorRef = useRef();
     const [loading, setLoading] = useState(false);
@@ -28,15 +29,19 @@ export default function NewQuote (props) {
           });
         setLoading(false);
         console.log("Document written with ID: ", docRef);
+        handleClose();
     }
 
     return (
         <div className="modal show" style={{ display: 'block', position: 'initial' }}>
             <Modal.Dialog>
-                <Modal.Header>Add quote</Modal.Header>
+                <Modal.Header>
+                    <Modal.Title>Add quote</Modal.Title>
+                </Modal.Header>
                 
-                <Modal.Body>
-                    <Form onSubmit={ handleSubmit} >
+                <Form onSubmit={ handleSubmit} >
+                    
+                    <Modal.Body>
                         <Form.Group id="text">
                             <Form.Label>Quote</Form.Label>
                             <Form.Control type="text" ref={textRef} required/>
@@ -45,12 +50,13 @@ export default function NewQuote (props) {
                             <Form.Label>Author</Form.Label>
                             <Form.Control type="text" ref={authorRef} required/>
                         </Form.Group>
-                        <Form.Group>
-                            <Button style={styles} disabled={loading} className="w-100" type="submit">Save</Button>
-                            <Button style={styles} disabled={loading} className="w-100" variant="secondary" onClick={handleClose}>Close</Button>
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
+                    </Modal.Body>
+                        
+                    <Modal.Footer>
+                        <Button style={styles} disabled={loading} type="submit">Save</Button>
+                        <Button style={styles} disabled={loading} variant="secondary" onClick={handleClose}>Close</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal.Dialog>
         </div>
     )

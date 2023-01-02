@@ -89,7 +89,7 @@ export default function Topnav(props) {
   return (
     <>
       {['top'].map((placement, idx) => (
-        <OffCanvasExample shown={props.shown} key={idx} placement={placement} name={placement} function={props.setDataBase} />
+        <OffCanvasExample shown={props.shown} key={idx} placement={placement} name={placement} />
       ))}
     </>
   );
