@@ -32,7 +32,8 @@ const App = () => {
 
   const [dataBase, setDataBase] = useState(() => {
     if (searchParams.get("user") != null && searchParams.get("user") != "barz") {
-      return dataChoice.getUser[0] = searchParams.get("user");
+      dataChoice.getUser[0] = searchParams.get("user");
+      return dataChoice.getUser;
     } else if (searchParams.get("user") != null) {
       return dataChoice.barz;
     } else {
