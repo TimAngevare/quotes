@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import QuoteContainer from './QuoteContainer';
 import Corner from './Corner';
 import Topnav from './Topnav';
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Col, Container, Row, Button, Alert } from 'react-bootstrap';
 import UseScreenOrientation from './UseScreenOrientation';
 import { useEffect, useState } from 'react';
 import { db } from '../Firebase';
@@ -28,8 +28,10 @@ const App = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [showEdit, setShowEdit] = useState(false);
-  const [barz, setbarz] = useState([{id : 1, data : {"quote" : "You have not added any quotes yet.", "author" : "Tim"}}]);
+  const [showAdd, setShowAdd] = useState(false);
+  const [barz, setBarz] = useState([{id : undefined, data : {"quote" : "You have not added any quotes yet.", "author" : "Tim"}}]);
   const [ranInt, setRanInt] = useState(0);
+  const [error, setError] = useState("");
 
   const [dataBase, setDataBase] = useState(() => {
     if (searchParams.get("user") != null && searchParams.get("user") != "barz") {
@@ -48,6 +50,10 @@ const App = () => {
     setShowEdit(!showEdit);
   }
 
+  const handleShowAdd = (e) => {
+    setShowAdd(!showAdd);
+  }
+
   const genRanInt = (length) => {
     if (typeof length === 'object') {
         length = barz.length;
@@ -57,19 +63,29 @@ const App = () => {
   };
 
   useEffect(() => {
+    setError("");
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
       const res = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
       if (res != undefined && res.length != 0) {
         genRanInt(res.length);
-        setbarz(res);
+        setBarz(res);
+      } else if (res.length == 0) {
+        setBarz([{id : undefined, data : {"quote" : "You have not added any quotes yet.", "author" : "Tim"}}])
       }
+        // } else {
+      //   setError("database not found");
+      // }
     });    
   },[dataBase]);
 
   return (
     <div>
+      {error && <Alert variant="danger">{error}</Alert>}
       <div style={styles.cardStyle} id='wrapper'>
-        { showEdit && <EditQuotes database={barz} showEdit={handleShowEdit}/>}
+        { showEdit && <EditQuotes database={barz} showEdit={handleShowEdit} showAdd={handleShowAdd}/>}
+      </div>
+      <div style={styles.cardStyle} id='wrapper'>
+        { showAdd && <NewQuote shown={handleShowAdd}/>}
       </div>
       <Container fluid>
         <UseScreenOrientation/>
