@@ -12,8 +12,8 @@ export default function Routing(){
             <AuthProvider>
                 <Routes>
                     <Route exact path='/' element={<PrivateRoute component={<App/>}/>}/>
-                    <Route path="/LoginPage" element={<LoginPage/>}/>
-                    <Route path="/SignupPage" element={<SignupPage/>}/>
+                    <Route path="/loginPage" element={<LoginPage/>}/>
+                    <Route path="/signupPage" element={<SignupPage/>}/>
                     <Route path="/public" element={<App/>}/>
                 </Routes>
             </AuthProvider>
