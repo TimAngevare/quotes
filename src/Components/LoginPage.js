@@ -62,7 +62,7 @@ export default function LoginPage() {
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                Don't have an account? <Link to="/SignupPage">Sign up!</Link>
+                Don't have an account? <Link to="/signupPage">Sign up!</Link>
             </div>
             <Wave/>
         </div>

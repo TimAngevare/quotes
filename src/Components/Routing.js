@@ -1,6 +1,6 @@
 import React from "react";
 import { AuthProvider } from "../contexts/AuthContext";
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { HashRouter, Routes, Route} from 'react-router-dom';
 import SignupPage from "./SignupPage";
 import App from "./App";
 import LoginPage from "./LoginPage";
@@ -8,7 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 
 export default function Routing(){
     return(
-        <Router>
+        <HashRouter>
             <AuthProvider>
                 <Routes>
                     <Route exact path='/' element={<PrivateRoute component={<App/>}/>}/>
@@ -17,6 +17,6 @@ export default function Routing(){
                     <Route path="/public" element={<App/>}/>
                 </Routes>
             </AuthProvider>
-        </Router>
+        </HashRouter>
     );
 }
