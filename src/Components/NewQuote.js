@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { db } from '../Firebase';
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 
-export default function NewQuote (props) {
+export default function NewQuote(props) {
     const styles = {
-        padding : '10px',
-        marginBottom : '10px'
+        padding: '10px',
+        marginBottom: '10px'
     }
 
     const textRef = useRef();
@@ -18,15 +18,15 @@ export default function NewQuote (props) {
     const handleClose = (e) => {
         props.shown();
     }
-    
-    async function handleSubmit(e){
+
+    async function handleSubmit(e) {
         e.preventDefault();
         const user = window.localStorage.getItem('user');
         setLoading(true);
         const docRef = await addDoc(collection(db, user), {
             quote: textRef.current.value,
             author: authorRef.current.value
-          });
+        });
         setLoading(false);
         console.log("Document written with ID: ", docRef);
         handleClose();
@@ -38,20 +38,20 @@ export default function NewQuote (props) {
                 <Modal.Header>
                     <Modal.Title>Add quote</Modal.Title>
                 </Modal.Header>
-                
-                <Form onSubmit={ handleSubmit} >
-                    
+
+                <Form onSubmit={handleSubmit} >
+
                     <Modal.Body>
                         <Form.Group id="text">
                             <Form.Label>Quote</Form.Label>
-                            <Form.Control type="text" ref={textRef} required/>
+                            <Form.Control type="text" ref={textRef} required />
                         </Form.Group>
                         <Form.Group id="author">
                             <Form.Label>Author</Form.Label>
-                            <Form.Control type="text" ref={authorRef} required/>
+                            <Form.Control type="text" ref={authorRef} required />
                         </Form.Group>
                     </Modal.Body>
-                        
+
                     <Modal.Footer>
                         <Button style={styles} disabled={loading} type="submit">Save</Button>
                         <Button style={styles} disabled={loading} variant="secondary" onClick={handleClose}>Close</Button>

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { ButtonGroup } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+import { Button, Alert, ButtonGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import Row from 'react-bootstrap/Row';
 import '../navbar.css';
 import {signOut } from "firebase/auth";
 import { auth } from '../Firebase'
 import {useNavigate} from 'react-router-dom';
 
 
-function OffCanvasExample({ name, shown, ...props }) {
+function OffCanvasExample({ name, shown, showEdit, ...props }) {
   const history = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -74,7 +71,7 @@ function OffCanvasExample({ name, shown, ...props }) {
           <Row>
             <ButtonGroup style={{width : "100%", height : "60%"}}>
               <Button onClick={handleSignOut}>Sign Out</Button>
-              <Button onClick={shown}>Add Quote</Button>
+              <Button onClick={showEdit}>Edit Quotes</Button>
               <Button onClick={share}>Share!</Button>
               <Button onClick={changeBarz}>Barz</Button>
             </ButtonGroup>
@@ -89,7 +86,7 @@ export default function Topnav(props) {
   return (
     <>
       {['top'].map((placement, idx) => (
-        <OffCanvasExample shown={props.shown} key={idx} placement={placement} name={placement} />
+        <OffCanvasExample showEdit={props.showEdit} key={idx} placement={placement} name={placement} />
       ))}
     </>
   );

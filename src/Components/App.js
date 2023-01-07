@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../Firebase';
 import { onSnapshot, collection } from 'firebase/firestore';
 import NewQuote from './NewQuote';
+import EditQuotes from "./EditQuotes";
 
 const styles ={ cardStyle : {
   position: "absolute",
@@ -26,8 +27,8 @@ const dataChoice = {
 const App = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [shown, setShown] = useState(false);
-  const [barz, setbarz] = useState([{"quote" : "You have not added any quotes yet.", "author" : "Tim"}]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [barz, setbarz] = useState([{id : 1, data : {"quote" : "You have not added any quotes yet.", "author" : "Tim"}}]);
   const [ranInt, setRanInt] = useState(0);
 
   const [dataBase, setDataBase] = useState(() => {
@@ -43,8 +44,8 @@ const App = () => {
 
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
-  const handleShown = (e) => {
-    setShown(!shown);
+  const handleShowEdit = (e) => {
+    setShowEdit(!showEdit);
   }
 
   const genRanInt = (length) => {
@@ -57,7 +58,7 @@ const App = () => {
 
   useEffect(() => {
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
-      const res = snapshot.docs.map((doc) => doc.data());
+      const res = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
       if (res != undefined && res.length != 0) {
         genRanInt(res.length);
         setbarz(res);
@@ -68,7 +69,7 @@ const App = () => {
   return (
     <div>
       <div style={styles.cardStyle} id='wrapper'>
-        { shown && <NewQuote shown={handleShown}/>}
+        { showEdit && <EditQuotes database={barz} showEdit={handleShowEdit}/>}
       </div>
       <Container fluid>
         <UseScreenOrientation/>
@@ -78,7 +79,7 @@ const App = () => {
           </Col>
           <Col>
             {searchParams.get("user") === null &&
-              <Topnav setDataBase={handleDataBase} shown={handleShown}/>
+              <Topnav setDataBase={handleDataBase} showEdit={handleShowEdit}/>
             }
           </Col>
           <Col xs={2} lg={3} style={{padding : 0}}>
@@ -87,7 +88,7 @@ const App = () => {
         </Row>
 
         <Row className=''>
-          <QuoteContainer dataBase={dataBase} quote={barz[ranInt]} />
+          <QuoteContainer dataBase={dataBase} quote={barz[ranInt].data} />
         </Row>
 
         <Row>
