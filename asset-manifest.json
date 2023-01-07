@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/hiphopquotes/static/css/main.d215a218.css",
-    "main.js": "/hiphopquotes/static/js/main.d44ac788.js",
-    "static/media/Quotes.png": "/hiphopquotes/static/media/Quotes.749cfb310c282b23fa6b.png",
-    "static/media/corner.svg": "/hiphopquotes/static/media/corner.602de3812878b0ca115d3acaeb4e3b33.svg",
-    "index.html": "/hiphopquotes/index.html",
-    "main.d215a218.css.map": "/hiphopquotes/static/css/main.d215a218.css.map",
-    "main.d44ac788.js.map": "/hiphopquotes/static/js/main.d44ac788.js.map"
+    "main.css": "/static/css/main.d215a218.css",
+    "main.js": "/static/js/main.029aa590.js",
+    "static/media/Quotes.png": "/static/media/Quotes.749cfb310c282b23fa6b.png",
+    "static/media/corner.svg": "/static/media/corner.602de3812878b0ca115d3acaeb4e3b33.svg",
+    "index.html": "/index.html",
+    "main.d215a218.css.map": "/static/css/main.d215a218.css.map",
+    "main.029aa590.js.map": "/static/js/main.029aa590.js.map"
   },
   "entrypoints": [
     "static/css/main.d215a218.css",
-    "static/js/main.d44ac788.js"
+    "static/js/main.029aa590.js"
   ]
 }
