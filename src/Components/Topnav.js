@@ -35,6 +35,7 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
       alert(error);
     });
   }
+  
   const changeBarz = (e) => {
     handleClose();
     history('/public?user=barz');

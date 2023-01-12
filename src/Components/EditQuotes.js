@@ -73,8 +73,10 @@ export default function EditQuotes(props) {
     }
 
     return (
-        <div className="modal show" style={{ display: 'inline', position: 'initial' }}>
-            <Modal.Dialog>
+        <div className="modal show" style={{ display: 'inline', position: 'initial', maxHeight: "100px",
+        overflowY: "auto"}}>
+            <Modal.Dialog keyboard style={{ display: 'inline', position: 'initial', maxHeight: "100px",
+        overflowY: "auto"}}>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Modal.Header>
                     <Col xs={9}>

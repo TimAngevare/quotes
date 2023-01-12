@@ -38,7 +38,7 @@ export default function NewQuote(props) {
 
     return (
         <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-            <Modal.Dialog>
+            <Modal.Dialog keyboard>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Modal.Header>
                     <Modal.Title>Add quote</Modal.Title>
