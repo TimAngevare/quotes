@@ -5,6 +5,7 @@ import { Modal, Button, Row, Col, Form, CloseButton, Alert } from "react-bootstr
 
 export default function EditQuotes(props) {
     const [barz, setBarz] = useState(props.database);
+    const [prevbarz, setPrevBarz] = useState(props.database);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("")
 
@@ -25,17 +26,18 @@ export default function EditQuotes(props) {
                 setError("Cannot have an empty quote");
                 setLoading(false);
                 return null;
+            } else if (bar.data['quote'] != prevbarz[i].data['quote'] || bar.data['author'] != prevbarz[i].data['author']) {
+                await setDoc(doc(db, window.localStorage.getItem('user'), bar.id), {
+                    quote: bar.data['quote'],
+                    author: bar.data['author']
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setError("error: " + errorCode + " " + errorMessage);
+                    return null;
+                }); 
             }
-            await setDoc(doc(db, window.localStorage.getItem('user'), bar.id), {
-                quote: bar.data['quote'],
-                author: bar.data['author']
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setError("error: " + errorCode + " " + errorMessage);
-                return null;
-            });
         }
         setLoading(false);
         props.showEdit();
@@ -51,6 +53,7 @@ export default function EditQuotes(props) {
 
     const handleChange = (e, index, type) => {
         setError("");
+        setPrevBarz([barz]);
         const newBarz = [...barz];
         newBarz[index].data[type] = e.target.value;
         setBarz(newBarz);
