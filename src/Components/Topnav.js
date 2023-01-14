@@ -27,6 +27,11 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
     setShowAlert(false);
   };
 
+  const handleShowEdit = () => {
+    showEdit();
+    handleClose();
+  }
+
   const handleSignOut = (e) => {
     handleClose();
     signOut(auth).then(() => {
@@ -72,7 +77,7 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
           <Row>
             <ButtonGroup style={{width : "100%", height : "60%"}}>
               <Button onClick={handleSignOut}>Sign Out</Button>
-              <Button onClick={showEdit}>Edit Quotes</Button>
+              <Button onClick={handleShowEdit}>Edit Quotes</Button>
               <Button onClick={share}>Share!</Button>
               <Button onClick={changeBarz}>Barz</Button>
             </ButtonGroup>

@@ -15,7 +15,8 @@ export default function NewQuote(props) {
     const [error, setError] = useState("")
 
     const handleClose = (e) => {
-        props.shown();
+        props.handleShown();
+        props.handleShowEdit();
     }
 
     async function handleSubmit(e) {
@@ -37,10 +38,9 @@ export default function NewQuote(props) {
     }
 
     return (
-        <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-            <Modal.Dialog keyboard>
+            <Modal size="lg" show={props.shown} onHide={props.handleShown} keyboard>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Modal.Header>
+                <Modal.Header closeButton>
                     <Modal.Title>Add quote</Modal.Title>
                 </Modal.Header>
 
@@ -62,7 +62,6 @@ export default function NewQuote(props) {
                         <Button style={styles} disabled={loading} variant="secondary" onClick={handleClose}>Close</Button>
                     </Modal.Footer>
                 </Form>
-            </Modal.Dialog>
-        </div>
+            </Modal>
     )
 }

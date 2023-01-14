@@ -15,6 +15,7 @@ export default function EditQuotes(props) {
 
     useEffect(() => {
         setBarz(props.database);
+        setPrevBarz(props.database);
     },[props.database]);
 
     async function handleSave(e) {
@@ -40,15 +41,16 @@ export default function EditQuotes(props) {
             }
         }
         setLoading(false);
-        props.showEdit();
+        props.handleShowEdit();
     }
 
     const handleClose = (e) => {
-        props.showEdit();
+        props.handleShowEdit();
     }
 
     const handleClick = () => {
-        props.showAdd()
+        props.showAdd();
+        props.handleShowEdit();
     }
 
     const handleChange = (e, index, type) => {
@@ -76,26 +78,25 @@ export default function EditQuotes(props) {
     }
 
     return (
-        <div className="modal show" style={{ display: 'inline', position: 'initial', maxHeight: "100px",
-        overflowY: "auto"}}>
-            <Modal.Dialog keyboard style={{ display: 'inline', position: 'initial', maxHeight: "100px",
-        overflowY: "auto"}}>
+        // <div className="modal show" style={{ display: 'inline', position: 'initial', maxHeight: "100px",
+        // overflowY: "auto"}}>
+            <Modal size="lg" show={props.showEdit} onHide={props.handleShowEdit} keyboard>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Modal.Header>
-                    <Col xs={9}>
+                    <Col xs={11}>
                         <Modal.Title>Edit quotes</Modal.Title>
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={1}>
                         <Button variant="success" onClick={handleClick}>New</Button>
                     </Col>
                 </Modal.Header>
 
                 <Modal.Body>
                     <Row my={2}>
-                        <Col xs={5}>
+                        <Col xs={6}>
                             <p style={styles.text}>Quotes</p>
                         </Col>
-                        <Col xs={5}>
+                        <Col xs={4}>
                             <p style={styles.text}>Author</p>
                         </Col>
                     </Row>
@@ -104,7 +105,7 @@ export default function EditQuotes(props) {
                             <h2></h2>
                             { bar.id != undefined &&
                             <Row key={bar.id} my={3}>
-                                <Col xs={5}>
+                                <Col xs={6}>
                                     <Form.Control
                                         as="textarea"
                                         style={styles.spacing} 
@@ -114,7 +115,7 @@ export default function EditQuotes(props) {
                                         onChange={(e) => handleChange(e, barz.indexOf(bar), "quote")}
                                     />
                                 </Col>
-                                <Col xs={5}>
+                                <Col xs={4}>
                                     <Form.Control
                                         style={styles.spacing} 
                                         key={String(bar.id) + ":author"}
@@ -134,7 +135,7 @@ export default function EditQuotes(props) {
                     <Button disabled={loading} type="submit" onClick={handleSave}>Save</Button>
                     <Button disabled={loading} variant="secondary" onClick={handleClose}>Close</Button>
                 </Modal.Footer>
-            </Modal.Dialog>
-        </div>
+            </Modal>
+        // </div>
     );
 }
