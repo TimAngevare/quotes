@@ -77,6 +77,13 @@ const App = () => {
     });    
   },[dataBase]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      genRanInt(barz.length)
+    }, 180000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       {error && <Alert variant="danger">{error}</Alert>}
