@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Button, Alert, ButtonGroup, Row } from 'react-bootstrap';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import React, {useState} from 'react';
+import {Alert, Button, Nav, Navbar, Offcanvas, Row} from 'react-bootstrap';
 import '../navbar.css';
-import {signOut } from "firebase/auth";
-import { auth } from '../Firebase'
+import {signOut} from "firebase/auth";
+import {auth} from '../Firebase'
 import {useNavigate} from 'react-router-dom';
 
 
@@ -72,16 +71,28 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
           Share link copied to clipboard!
         </Alert>
         <Offcanvas.Header closeButton>
+          <Button variant="outline-danger" onClick={handleSignOut}>Sign out</Button>
         </Offcanvas.Header>
         <Offcanvas.Body className='d-flex justify-content-center'>
-          <Row>
-            <ButtonGroup style={{width : "100%", height : "60%"}}>
-              <Button onClick={handleSignOut}>Sign Out</Button>
-              <Button onClick={handleShowEdit}>Edit Quotes</Button>
-              <Button onClick={share}>Share!</Button>
-              <Button onClick={changeBarz}>Barz</Button>
-            </ButtonGroup>
-          </Row>
+          <Navbar variant="light" style={{width: "100%"}}>
+            <Navbar.Brand className='d-flex justify-content-center' onClick={handleSignOut}>
+              <h2>Quotes</h2>
+              {/*<img alt={"logo"} src={logo} style={{*/}
+              {/*  width: "25%",*/}
+              {/*  height: "auto",*/}
+              {/*  display: "block",*/}
+              {/*  marginLeft: "auto",*/}
+              {/*  marginRight: "auto",*/}
+              {/*  paddingBottom: 10*/}
+              {/*}}/>*/}
+            </Navbar.Brand>
+            <Navbar.Toggle/>
+            <Nav className="me-auto">
+              <Nav.Link onClick={handleShowEdit}><h4>Edit Quotes</h4></Nav.Link>
+              <Nav.Link onClick={share}><h4>Share!</h4></Nav.Link>
+              <Nav.Link onClick={changeBarz}><h4>Barz</h4></Nav.Link>
+            </Nav>
+          </Navbar>
         </Offcanvas.Body>
       </Offcanvas>
     </>
