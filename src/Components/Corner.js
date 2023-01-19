@@ -1,11 +1,11 @@
-import { ReactComponent as CornerImg } from '../img/corner.svg';
+import {ReactComponent as CornerImg} from '../img/corner.svg';
 
 
 export default function Corner(props) {
 
   const style = {
     transform: "rotate(" + props.rotation + "deg)",
-    width: "90%",
+    width: "100%",
     height: "auto",
   };
 

@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert} from 'react-bootstrap';
-import { auth } from '../Firebase'
-import {createUserWithEmailAndPassword } from "firebase/auth";
-import { Link, useNavigate } from 'react-router-dom';
+import React, {useRef, useState} from "react";
+import {Alert, Button, Card, Form} from 'react-bootstrap';
+import {auth} from '../Firebase'
+import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import {Link, useNavigate} from 'react-router-dom';
 import logo from '../img/Quotes.png';
 import Wave from "./Wave";
 
@@ -25,17 +25,21 @@ export default function SignupPage() {
         setError("");
         setLoading(true);
         await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user.email
-            window.localStorage.setItem('user', user.split("@")[0]);
-            history('/');
-                // ...
-            }).catch((error) => {
-                setError("error: " + error.code + " " + error.message);
-                console.log(error.code);
-                console.log(error.message);
-                    // ..
+            // Signed in
+            sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    // Email verification sent!
+                    const user = userCredential.user.email
+                    window.localStorage.setItem('user', user.split("@")[0]);
+                    history('/');
                 });
+            // ...
+        }).catch((error) => {
+            setError("error: " + error.code + " " + error.message);
+            console.log(error.code);
+            console.log(error.message);
+            // ..
+        });
         setLoading(false);
     }
     return(
@@ -43,7 +47,14 @@ export default function SignupPage() {
             <Card>
                 <Card.Body>
                     <div>
-                        <img src={logo} style={{width : "10%", height : "auto", display : "block", marginLeft : "auto", marginRight : "auto", paddingBottom : 20}}/>
+                        <img alt={"logo"} src={logo} style={{
+                            width: "10%",
+                            height: "auto",
+                            display: "block",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            paddingBottom: 20
+                        }}/>
                     </div>
                     <h2 className="text-center mb-4">Sign up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
