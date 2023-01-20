@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import {Alert, Button, Card, Form} from 'react-bootstrap';
 import {auth} from '../Firebase'
-import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
 import {Link, useNavigate} from 'react-router-dom';
 import logo from '../img/Quotes.png';
 import Wave from "./Wave";
@@ -9,6 +9,7 @@ import Wave from "./Wave";
 export default function SignupPage() {
     const emailRef = useRef();
     const passwordRef = useRef();
+    const usernameRef = useRef();
     const passwordConfirmationRef = useRef();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -33,6 +34,16 @@ export default function SignupPage() {
                     window.localStorage.setItem('user', user.split("@")[0]);
                     history('/');
                 });
+            updateProfile(auth.currentUser, {
+                displayName: usernameRef.current.value
+            }).then(() => {
+                history("/");
+                // Profile updated!
+            }).catch((error) => {
+                // An error occurred
+                return setError("error: " + error.code + " " + error.message);
+            });
+
             // ...
         }).catch((error) => {
             setError("error: " + error.code + " " + error.message);
@@ -58,10 +69,14 @@ export default function SignupPage() {
                     </div>
                     <h2 className="text-center mb-4">Sign up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <Form onSubmit={ handleSubmit }>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required/>
+                        </Form.Group>
+                        <Form.Group id="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control ref={usernameRef} required/>
                         </Form.Group>
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
