@@ -8,7 +8,6 @@ import logo from '../img/Quotes.png';
 
 
 export default function LoginPage() {
-    const styles = {}
     const emailRef = useRef();
     const passwordRef = useRef();
     const [error, setError] = useState("");
@@ -52,11 +51,6 @@ export default function LoginPage() {
         setError("");
         setLoading(true);
         signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-            .then((userCredential) => {
-                // Signed in
-                window.localStorage.setItem('user', userCredential.user.email.split("@")[0]);
-                // ...
-        })
         .then(() => {
             setLoading(false);
             history('/');
@@ -96,7 +90,7 @@ export default function LoginPage() {
             <Card>
                 <Card.Body>
                     <div>
-                        <img src={logo} style={{
+                        <img alt="Logo" src={logo} style={{
                             width: "10%",
                             height: "auto",
                             display: "block",

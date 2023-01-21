@@ -1,10 +1,11 @@
 import React, {useRef, useState} from "react";
 import {Alert, Button, Card, Form} from 'react-bootstrap';
-import {auth} from '../Firebase'
+import {auth, db} from '../Firebase'
 import {createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
 import {Link, useNavigate} from 'react-router-dom';
 import logo from '../img/Quotes.png';
 import Wave from "./Wave";
+import {doc, getDoc, setDoc} from 'firebase/firestore';
 
 export default function SignupPage() {
     const emailRef = useRef();
@@ -17,33 +18,39 @@ export default function SignupPage() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const username = usernameRef.current.value;
+        const docRef = doc(db, "usernames", username);
+        const docSnap = await getDoc(docRef);
 
-        if (passwordRef.current.value !== passwordConfirmationRef.current.value){
-            return setError("Passwords do not match")
+        if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
+            return setError("Passwords do not match");
+        } else if (username.includes(" ")) {
+            return setError("Username cannot contain space");
+        } else if (docSnap.exists()) {
+            console.log(docSnap);
+            return setError("Username is taken");
         }
 
-        
+
         setError("");
         setLoading(true);
-        await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+        await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value).then(() => {
             // Signed in
             sendEmailVerification(auth.currentUser)
                 .then(() => {
                     // Email verification sent!
-                    const user = userCredential.user.email
-                    window.localStorage.setItem('user', user.split("@")[0]);
-                    history('/');
+                    updateProfile(auth.currentUser, {
+                        displayName: username
+                    }).then(async () => {
+                        await setDoc(doc(db, "usernames", username), {
+                            username: username
+                        });
+                        history('/');
+                    }).catch((error) => {
+                        // An error occurred
+                        return setError("error: " + error.code + " " + error.message);
+                    });
                 });
-            updateProfile(auth.currentUser, {
-                displayName: usernameRef.current.value
-            }).then(() => {
-                history("/");
-                // Profile updated!
-            }).catch((error) => {
-                // An error occurred
-                return setError("error: " + error.code + " " + error.message);
-            });
-
             // ...
         }).catch((error) => {
             setError("error: " + error.code + " " + error.message);
