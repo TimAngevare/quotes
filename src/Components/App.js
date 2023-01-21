@@ -3,6 +3,7 @@ import QuoteContainer from './QuoteContainer';
 import Corner from './Corner';
 import Topnav from './Topnav';
 import {Alert, Button, Col, Container, Row} from 'react-bootstrap';
+import {getAuth} from "firebase/auth";
 import UseScreenOrientation from './UseScreenOrientation';
 import {useEffect, useState} from 'react';
 import {db} from '../Firebase';
@@ -10,19 +11,25 @@ import {collection, onSnapshot} from 'firebase/firestore';
 import NewQuote from './NewQuote';
 import EditQuotes from "./EditQuotes";
 
-const dataChoice = {
-  barz: ["barz", "song", "bar", "artist"],
-  user: [window.localStorage.getItem('user'), "author", "quote"],
-  getUser: [null, "author", "quote"]
-};
-
 
 const App = () => {
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const dataChoice = {
+    barz: ["barz", "song", "bar", "artist"],
+    user: [user.displayName, "author", "quote"],
+    getUser: [null, "author", "quote"]
+  };
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
-  const [barz, setBarz] = useState([{id : undefined, data : {"quote" : "You have not added any quotes yet.", "author" : "Tim"}}]);
+  const [barz, setBarz] = useState([{
+    id: undefined,
+    data: {"quote": "You have not added any quotes yet.", "author": "Tim"}
+  }]);
   const [ranInt, setRanInt] = useState(0);
   const [error, setError] = useState("");
   const history = useNavigate();
@@ -70,9 +77,6 @@ const App = () => {
       } else if (res !== undefined && res.length == 0) {
         setBarz([{id: undefined, data: {"quote": "You have not added any quotes yet.", "author": "Tim"}}])
       }
-        // } else {
-      //   setError("database not found");
-      // }
     });    
   },[dataBase]);
 
