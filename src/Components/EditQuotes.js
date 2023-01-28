@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {deleteDoc, doc, setDoc} from "firebase/firestore";
-import {getAuth} from "firebase/auth";
 import {db} from '../Firebase';
 import {Alert, Button, CloseButton, Col, Form, Modal, Row} from "react-bootstrap";
 
@@ -9,10 +8,6 @@ export default function EditQuotes(props) {
     const [prevbarz, setPrevBarz] = useState(props.database);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("")
-    const [displayName, setDisplayName] = useState("");
-
-    const auth = getAuth();
-    const user = auth.currentUser;
 
     const styles = {
         text: {
@@ -23,20 +18,12 @@ export default function EditQuotes(props) {
     }
 
     useEffect(() => {
-        if (user !== null) {
-            // The user object has basic properties such as display name, email, etc.
-            setDisplayName(user.displayName);
-        } else {
-            setError("User not authenticated");
-        }
-    }, [])
-
-    useEffect(() => {
         setBarz(props.database);
         setPrevBarz(props.database);
     }, [props.database]);
 
     async function handleSave(e) {
+        e.preventDefault();
         setError("");
         setLoading(true);
         for (let i = 0; i < barz.length; i++) {
@@ -46,7 +33,7 @@ export default function EditQuotes(props) {
                 setLoading(false);
                 return null;
             } else if (bar.data['quote'] != prevbarz[i].data['quote'] || bar.data['author'] != prevbarz[i].data['author']) {
-                await setDoc(doc(db, displayName, bar.id), {
+                await setDoc(doc(db, props.user.displayName, bar.id), {
                     quote: bar.data['quote'],
                     author: bar.data['author']
                 })
@@ -62,7 +49,7 @@ export default function EditQuotes(props) {
         props.handleShowEdit();
     }
 
-    const handleClose = (e) => {
+    const handleClose = () => {
         props.handleShowEdit();
     }
 
@@ -88,7 +75,7 @@ export default function EditQuotes(props) {
     async function deleteQuote (id) {
         setError("");
         setLoading(true);
-        await deleteDoc(doc(db, displayName, id))
+        await deleteDoc(doc(db, props.user.displayName, id))
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;

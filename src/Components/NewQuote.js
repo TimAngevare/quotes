@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Button, Modal, Form, Alert } from 'react-bootstrap'
-import { db } from '../Firebase';
-import { collection, addDoc } from "firebase/firestore";
+import React, {useRef, useState} from "react";
+import {Alert, Button, Form, Modal} from 'react-bootstrap'
+import {db} from '../Firebase';
+import {addDoc, collection} from "firebase/firestore";
 
 export default function NewQuote(props) {
     const styles = {
@@ -14,7 +14,7 @@ export default function NewQuote(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("")
 
-    const handleClose = (e) => {
+    const handleClose = () => {
         props.handleShown();
         props.handleShowEdit();
     }
@@ -22,9 +22,8 @@ export default function NewQuote(props) {
     async function handleSubmit(e) {
         setError("");
         e.preventDefault();
-        const user = window.localStorage.getItem('user');
         setLoading(true);
-        const docRef = await addDoc(collection(db, user), {
+        await addDoc(collection(db, props.user.displayName), {
             quote: textRef.current.value,
             author: authorRef.current.value
         }).catch((error) => {

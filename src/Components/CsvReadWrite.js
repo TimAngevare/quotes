@@ -1,4 +1,4 @@
-import {Button, Form, Modal} from "react-bootstrap";
+import {Alert, Button, Form, Modal} from "react-bootstrap";
 import {useRef, useState} from "react";
 import Papa from 'papaparse';
 import {addDoc, collection} from "firebase/firestore";
@@ -9,13 +9,15 @@ export default function CsvReadWrite(props) {
     const [file, setFile] = useState(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false)
+    const [columnNum, setColumnNum] = useState(0);
 
     const delimiterRef = useRef();
     const rowRef = useRef();
 
     const writeDataToDatabase = async (start, quoteIndex, authorIndex, data) => {
         for (let i = start; i++; i < data.length) {
-            const docRef = await addDoc(collection(db, user), {
+            console.log(data[i]);
+            await addDoc(collection(db, props.user.displayName), {
                 quote: data[i][quoteIndex],
                 author: data[i][authorIndex]
             }).catch((error) => {
@@ -35,7 +37,10 @@ export default function CsvReadWrite(props) {
             Papa.parse(csvData, {
                 complete: (results) => {
                     console.log(results.data);
-                    writeDataToDatabase(results.data);
+                    const start = (rowRef) ? 1 : 0;
+                    const authorColumn = columnNum - 1;
+                    const quoteColumn = (columnNum - 1 == 0) ? 1 : 0;
+                    void writeDataToDatabase(0, quoteColumn, authorColumn, results.data);
                 }
             });
         };
@@ -49,6 +54,9 @@ export default function CsvReadWrite(props) {
         setFile(e.target.files[0]);
     }
 
+    const handleColumnChange = (e) => {
+        setColumnNum(e.target.value);
+    }
     const handleSubmit = (e) => {
         setLoading(true)
         e.preventDefault();
@@ -65,24 +73,36 @@ export default function CsvReadWrite(props) {
     return (
         <div className="modal show">
             <Modal show={props.showImportCSV} onHide={props.handleImportCSV}>
+                {error &&
+                    <Alert variant={"danger"}>{error}</Alert>
+                }
                 <Modal.Header closeButton>
                     <Modal.Title>Import data from CSV</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3">
                             <Form.Label>CSV file</Form.Label>
                             <Form.Control onChange={handleFileChange} type="file" accept=".csv"
                                           placeholder="Upload a .csv file"/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3">
                             <Form.Label>Delimiter</Form.Label>
                             <Form.Control maxLength={1} pattern={"[!@#$%^&*(),.?\":{}|<>]"} type="text" size={"sm"}
                                           ref={delimiterRef}
                                           placeholder="Enter special characters"/>
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Column number author field</Form.Label>
+                            <Form.Select onChange={handleColumnChange} aria-label="Column number author field">
+                                <option>Select value here</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                            </Form.Select>
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            <Form.Label> </Form.Label>
                             <Form.Check type="checkbox" label="Contains headers" ref={rowRef}/>
                         </Form.Group>
 

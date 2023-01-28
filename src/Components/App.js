@@ -16,7 +16,7 @@ import CsvReadWrite from "./CsvReadWrite";
 const App = () => {
 
   const auth = getAuth();
-  const user = auth.currentUser;
+  const user = (auth.currentUser !== null) ? auth.currentUser : null;
 
   const dataChoice = {
     barz: ["barz", "song", "bar", "artist"],
@@ -24,10 +24,10 @@ const App = () => {
     getUser: [null, "author", "quote"]
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showImportCSV, setShowImportCSV] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [barz, setBarz] = useState([{
     id: undefined,
     data: {"quote": "You have not added any quotes yet.", "author": "Tim"}
@@ -119,13 +119,13 @@ const App = () => {
       }
       <div id='wrapper'>
         <EditQuotes showEdit={showEdit} database={barz} handleImportCSV={handleImportCSV}
-                    handleShowEdit={handleShowEdit} showAdd={handleShowAdd}/>
+                    handleShowEdit={handleShowEdit} showAdd={handleShowAdd} user={user}/>
       </div>
       <div id='wrapper'>
-        <NewQuote shown={showAdd} handleShowEdit={handleShowEdit} handleShown={handleShowAdd}/>
+        <NewQuote shown={showAdd} handleShowEdit={handleShowEdit} handleShown={handleShowAdd} user={user}/>
       </div>
       <div id='wrapper'>
-        <CsvReadWrite showImportCSV={showImportCSV} handleImportCSV={handleImportCSV}/>
+        <CsvReadWrite showImportCSV={showImportCSV} handleImportCSV={handleImportCSV} user={user}/>
       </div>
       <Container fluid>
         <UseScreenOrientation/>
