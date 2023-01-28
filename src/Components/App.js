@@ -10,6 +10,7 @@ import {db} from '../Firebase';
 import {collection, onSnapshot} from 'firebase/firestore';
 import NewQuote from './NewQuote';
 import EditQuotes from "./EditQuotes";
+import CsvReadWrite from "./CsvReadWrite";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [showImportCSV, setShowImportCSV] = useState(false);
   const [barz, setBarz] = useState([{
     id: undefined,
     data: {"quote": "You have not added any quotes yet.", "author": "Tim"}
@@ -55,13 +57,16 @@ const App = () => {
     setShowAdd(!showAdd);
   }
 
+  const handleImportCSV = () => {
+    setShowImportCSV(!showImportCSV);
+  }
   const redirectAccount = () => {
     history('/');
   }
 
   const genRanInt = (length) => {
     if (typeof length === 'object') {
-        length = barz.length;
+      length = barz.length;
     }
     const newInt = Math.floor(Math.random() * length);
     setRanInt(newInt);
@@ -113,10 +118,14 @@ const App = () => {
           </svg>
       }
       <div id='wrapper'>
-        <EditQuotes showEdit={ showEdit } database={barz} handleShowEdit={handleShowEdit} showAdd={handleShowAdd}/>
+        <EditQuotes showEdit={showEdit} database={barz} handleImportCSV={handleImportCSV}
+                    handleShowEdit={handleShowEdit} showAdd={handleShowAdd}/>
       </div>
       <div id='wrapper'>
         <NewQuote shown={showAdd} handleShowEdit={handleShowEdit} handleShown={handleShowAdd}/>
+      </div>
+      <div id='wrapper'>
+        <CsvReadWrite showImportCSV={showImportCSV} handleImportCSV={handleImportCSV}/>
       </div>
       <Container fluid>
         <UseScreenOrientation/>
