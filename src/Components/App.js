@@ -11,6 +11,7 @@ import {collection, onSnapshot} from 'firebase/firestore';
 import NewQuote from './NewQuote';
 import EditQuotes from "./EditQuotes";
 import CsvReadWrite from "./CsvReadWrite";
+import FullScreen from './FullScreen';
 
 
 const App = () => {
@@ -76,10 +77,10 @@ const App = () => {
     setError("");
     onSnapshot(collection(db, dataBase[0]), (snapshot) =>  {
       const res = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
-      if (res !== undefined && res.length != 0) {
+      if (res !== undefined && res.length !== 0) {
         genRanInt(res.length);
         setBarz(res);
-      } else if (res !== undefined && res.length == 0) {
+      } else if (res !== undefined && res.length === 0) {
         setBarz([{id: undefined, data: {"quote": "You have not added any quotes yet.", "author": "Tim"}}])
       }
     });    
@@ -94,6 +95,7 @@ const App = () => {
 
   return (
     <div>
+      <FullScreen/>
       {error && <Alert variant="danger">{error}</Alert>}
       {searchParams.get("user") != null &&
           <svg onClick={redirectAccount} width="60px" height="60px"
@@ -148,13 +150,14 @@ const App = () => {
         </Row>
 
         <Row>
-          <Col xs={2} lg={3} style={{padding: 0, position: "fixed", bottom: 0}} className="bottom">
+          <Col xs={2} lg={"auto"} style={{padding: 0, position: "fixed", bottom: 0}} className="bottom">
             <Corner rotation="270"/>
           </Col>
           <Col className='text-center'>
             <Button onClick={genRanInt}>Refresh</Button>
           </Col>
-          <Col xs={2} lg={3} style={{padding: 0, right: 0, position: "fixed", bottom: 0, blockSize: "fit-content"}}>
+          <Col xs={2} lg={"auto"}
+               style={{padding: 0, right: 0, position: "fixed", bottom: 0, blockSize: "fit-content"}}>
             <Corner rotation="180"/>
           </Col>
         </Row>

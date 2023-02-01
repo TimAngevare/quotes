@@ -15,10 +15,7 @@ export default function CsvReadWrite(props) {
     const rowRef = useRef();
 
     const writeDataToDatabase = async (start, quoteIndex, authorIndex, data) => {
-        console.log(data.length);
         for (let i = start; i < data.length; i++) {
-            console.log("writing");
-            console.log(data[i]);
             await addDoc(collection(db, props.user.displayName), {
                 quote: data[i][quoteIndex],
                 author: data[i][authorIndex]
@@ -38,10 +35,9 @@ export default function CsvReadWrite(props) {
             const csvData = reader.result;
             Papa.parse(csvData, {
                 complete: async (results) => {
-                    console.log(results.data);
                     const start = (rowRef) ? 1 : 0;
                     const quoteColumn = columnNum - 1;
-                    const authorColumn = (columnNum - 1 == 0) ? 1 : 0;
+                    const authorColumn = (columnNum - 1 === 0) ? 1 : 0;
                     await writeDataToDatabase(start, quoteColumn, authorColumn, results.data);
                     console.log("done");
                 }
@@ -68,10 +64,6 @@ export default function CsvReadWrite(props) {
         props.handleImportCSV();
     }
 
-    const handleClose = (e) => {
-        e.preventDefault();
-        props.handleImportCSV();
-    }
 
     return (
         <div className="modal show">

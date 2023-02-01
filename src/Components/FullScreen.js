@@ -1,5 +1,8 @@
-export default function fullscreen() {
+import {useState} from "react";
+
+export default function FullScreen() {
     const elem = document.documentElement;
+    const [fullscreen, setFullscreen] = useState(false);
 
     function openFullscreen() {
         if (elem.requestFullscreen) {
@@ -9,6 +12,7 @@ export default function fullscreen() {
         } else if (elem.msRequestFullscreen) { /* IE11 */
             elem.msRequestFullscreen();
         }
+        setFullscreen(true);
     }
 
     /* Close fullscreen */
@@ -20,5 +24,13 @@ export default function fullscreen() {
         } else if (document.msExitFullscreen) { /* IE11 */
             document.msExitFullscreen();
         }
+        setFullscreen(false);
     }
+
+    document.addEventListener("keydown", (event) => {
+        event.preventDefault();
+        if (event.ctrlKey && event.key.toLowerCase() === "f") {
+            (fullscreen) ? closeFullscreen() : openFullscreen();
+        }
+    });
 }
