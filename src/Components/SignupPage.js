@@ -45,6 +45,8 @@ export default function SignupPage() {
                         await setDoc(doc(db, "usernames", username), {
                             username: username
                         });
+                        await auth.currentUser.getIdToken(true);
+                        await auth.currentUser.reload();
                         history('/');
                     }).catch((error) => {
                         // An error occurred

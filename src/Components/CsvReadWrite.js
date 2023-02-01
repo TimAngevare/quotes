@@ -15,7 +15,9 @@ export default function CsvReadWrite(props) {
     const rowRef = useRef();
 
     const writeDataToDatabase = async (start, quoteIndex, authorIndex, data) => {
-        for (let i = start; i++; i < data.length) {
+        console.log(data.length);
+        for (let i = start; i < data.length; i++) {
+            console.log("writing");
             console.log(data[i]);
             await addDoc(collection(db, props.user.displayName), {
                 quote: data[i][quoteIndex],
@@ -35,12 +37,13 @@ export default function CsvReadWrite(props) {
         reader.onload = () => {
             const csvData = reader.result;
             Papa.parse(csvData, {
-                complete: (results) => {
+                complete: async (results) => {
                     console.log(results.data);
                     const start = (rowRef) ? 1 : 0;
-                    const authorColumn = columnNum - 1;
-                    const quoteColumn = (columnNum - 1 == 0) ? 1 : 0;
-                    void writeDataToDatabase(0, quoteColumn, authorColumn, results.data);
+                    const quoteColumn = columnNum - 1;
+                    const authorColumn = (columnNum - 1 == 0) ? 1 : 0;
+                    await writeDataToDatabase(start, quoteColumn, authorColumn, results.data);
+                    console.log("done");
                 }
             });
         };
@@ -95,7 +98,7 @@ export default function CsvReadWrite(props) {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Column number author field</Form.Label>
-                            <Form.Select onChange={handleColumnChange} aria-label="Column number author field">
+                            <Form.Select onChange={handleColumnChange} aria-label="Column number quote field">
                                 <option>Select value here</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
