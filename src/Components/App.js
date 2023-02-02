@@ -28,7 +28,7 @@ const App = () => {
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showImportCSV, setShowImportCSV] = useState(false);
-  const searchParams = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [screenShot, setScreenShot] = useState(false);
   const [barz, setBarz] = useState([{
     id: undefined,

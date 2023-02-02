@@ -83,7 +83,7 @@ function OffCanvasExample({name, shown, showEdit, handleScreenShot, ...props}) {
             <Nav className="me-auto">
               <Nav.Link onClick={handleShowEdit}><h4>Edit Quotes</h4></Nav.Link>
               <Nav.Link onClick={share}><h4>Share!</h4></Nav.Link>
-              <Nav.Link onClick={changeBarz}><h4>Barz</h4></Nav.Link>
+              {/*<Nav.Link onClick={changeBarz}><h4>Barz</h4></Nav.Link>*/}
               <ScreenShot handleScreenShot={handleScreenShot}/>
             </Nav>
           </Navbar>
