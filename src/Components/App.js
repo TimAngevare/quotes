@@ -29,6 +29,7 @@ const App = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showImportCSV, setShowImportCSV] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [screenShot, setScreenShot] = useState(false);
   const [barz, setBarz] = useState([{
     id: undefined,
     data: {"quote": "You have not added any quotes yet.", "author": "Tim"}
@@ -50,6 +51,9 @@ const App = () => {
 
   const handleDataBase = e => setDataBase(dataChoice[e.target.value]);
 
+  const handleScreenShot = (boolean) => {
+    setScreenShot(boolean);
+  }
   const handleShowEdit = () => {
     setShowEdit(!showEdit);
   }
@@ -129,15 +133,15 @@ const App = () => {
       <div id='wrapper'>
         <CsvReadWrite showImportCSV={showImportCSV} handleImportCSV={handleImportCSV} user={user}/>
       </div>
-      <Container fluid>
+      <Container fluid id="capture">
         <UseScreenOrientation/>
-        <Row>
+        <Row className="flex-grow-1">
           <Col xs={2} lg={"auto"}>
             <Corner rotation="0"/>
           </Col>
           <Col className='text-center'>
-            {searchParams.get("user") === null &&
-                <Topnav setDataBase={handleDataBase} showEdit={handleShowEdit}/>
+            {searchParams.get("user") === null && !screenShot &&
+                <Topnav setDataBase={handleDataBase} showEdit={handleShowEdit} handleScreenShot={handleScreenShot}/>
             }
           </Col>
           <Col xs={2} lg={"auto"}>
@@ -145,19 +149,19 @@ const App = () => {
           </Col>
         </Row>
 
-        <Row>
+        <Row className="flex-grow-1">
           <QuoteContainer dataBase={dataBase} quote={barz[ranInt].data}/>
         </Row>
 
-        <Row>
-          <Col xs={2} lg={"auto"} style={{padding: 0, position: "fixed", bottom: 0}} className="bottom">
+        <Row className="flex-grow-1">
+          <Col xs={2} lg={"auto"} className="bottom">
             <Corner rotation="270"/>
           </Col>
           <Col className='text-center'>
-            <Button onClick={genRanInt}>Refresh</Button>
+            {!screenShot &&
+                <Button onClick={genRanInt}>Refresh</Button>}
           </Col>
-          <Col xs={2} lg={"auto"}
-               style={{padding: 0, right: 0, position: "fixed", bottom: 0, blockSize: "fit-content"}}>
+          <Col xs={2} lg={"auto"}>
             <Corner rotation="180"/>
           </Col>
         </Row>

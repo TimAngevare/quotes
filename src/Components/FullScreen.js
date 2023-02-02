@@ -28,8 +28,8 @@ export default function FullScreen() {
     }
 
     document.addEventListener("keydown", (event) => {
-        event.preventDefault();
         if (event.ctrlKey && event.key.toLowerCase() === "f") {
+            event.preventDefault();
             (fullscreen) ? closeFullscreen() : openFullscreen();
         }
     });

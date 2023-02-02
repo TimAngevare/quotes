@@ -4,9 +4,10 @@ import '../navbar.css';
 import {signOut} from "firebase/auth";
 import {auth} from '../Firebase'
 import {useNavigate} from 'react-router-dom';
+import ScreenShot from "./ScreenShot";
 
 
-function OffCanvasExample({ name, shown, showEdit, ...props }) {
+function OffCanvasExample({name, shown, showEdit, handleScreenShot, ...props}) {
   const history = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -14,7 +15,7 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
@@ -77,20 +78,13 @@ function OffCanvasExample({ name, shown, showEdit, ...props }) {
           <Navbar variant="light" style={{width: "100%"}}>
             <Navbar.Brand className='d-flex justify-content-center' onClick={handleSignOut}>
               <h2>Quotes</h2>
-              {/*<img alt={"logo"} src={logo} style={{*/}
-              {/*  width: "25%",*/}
-              {/*  height: "auto",*/}
-              {/*  display: "block",*/}
-              {/*  marginLeft: "auto",*/}
-              {/*  marginRight: "auto",*/}
-              {/*  paddingBottom: 10*/}
-              {/*}}/>*/}
             </Navbar.Brand>
             <Navbar.Toggle/>
             <Nav className="me-auto">
               <Nav.Link onClick={handleShowEdit}><h4>Edit Quotes</h4></Nav.Link>
               <Nav.Link onClick={share}><h4>Share!</h4></Nav.Link>
               <Nav.Link onClick={changeBarz}><h4>Barz</h4></Nav.Link>
+              <ScreenShot handleScreenShot={handleScreenShot}/>
             </Nav>
           </Navbar>
         </Offcanvas.Body>
@@ -103,7 +97,8 @@ export default function Topnav(props) {
   return (
     <>
       {['top'].map((placement, idx) => (
-        <OffCanvasExample showEdit={props.showEdit} key={idx} placement={placement} name={placement} />
+          <OffCanvasExample handleScreenShot={props.handleScreenShot} showEdit={props.showEdit} key={idx}
+                            placement={placement} name={placement}/>
       ))}
     </>
   );
