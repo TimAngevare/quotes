@@ -1,11 +1,9 @@
 import html2canvas from 'html2canvas';
 import {Nav} from "react-bootstrap";
-import {screen} from "@testing-library/react";
 
 export default function ScreenShot(props) {
 
     const handleScreenShot = (bool) => {
-        ;
         props.handleScreenShot(bool);
     }
 
@@ -13,10 +11,7 @@ export default function ScreenShot(props) {
     const takeScreenShot = async () => {
         await handleScreenShot(true);
         const body = document.querySelector("#capture")
-        html2canvas(body, {
-            windowWidth: body.scrollWidth,
-            windowHeight: screen.availHeight
-        }).then(canvas => {
+        html2canvas(body).then(canvas => {
             const a = document.createElement("a");
             a.href = canvas.toDataURL();
             a.download = "screenshot.jpg";
