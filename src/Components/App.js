@@ -12,7 +12,7 @@ import NewQuote from './NewQuote';
 import EditQuotes from "./EditQuotes";
 import CsvReadWrite from "./CsvReadWrite";
 import FullScreen from './FullScreen';
-
+import '../container.css'
 
 const App = () => {
 
@@ -21,7 +21,7 @@ const App = () => {
 
   const dataChoice = {
     barz: ["barz", "song", "bar", "artist"],
-    user: [user.displayName, "author", "quote"],
+    user: [null, "author", "quote"],
     getUser: [null, "author", "quote"]
   };
 
@@ -45,6 +45,7 @@ const App = () => {
     } else if (searchParams.get("user") != null) {
       return dataChoice.barz;
     } else {
+      dataChoice.user[0] = user.displayName;
       return dataChoice.user;
     }
   });
@@ -118,11 +119,12 @@ const App = () => {
             <Corner rotation="0"/>
           </Col>
           <Col className='text-center'>
-            {searchParams.get("user") === null && !screenShot &&
-                <Topnav setDataBase={handleDataBase} showEdit={handleShowEdit} handleScreenShot={handleScreenShot}/>
+            {searchParams.get("user") == null && !screenShot &&
+                <Topnav setDataBase={handleDataBase} user={user} showEdit={handleShowEdit}
+                        handleScreenShot={handleScreenShot}/>
             }
             {searchParams.get("user") != null &&
-                <svg onClick={redirectAccount} width="30%" height="30%"
+                <svg onClick={redirectAccount} width="20%" height="20%"
                      viewBox="0 0 24.00 24.00" fill="none"
                      xmlns="http://www.w3.org/2000/svg" stroke="#212529">
                   <g id="SVGRepo_bgCarrier"/>

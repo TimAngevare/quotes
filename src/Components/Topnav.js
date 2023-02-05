@@ -7,45 +7,40 @@ import {useNavigate} from 'react-router-dom';
 import ScreenShot from "./ScreenShot";
 
 
-function OffCanvasExample({name, shown, showEdit, handleScreenShot, ...props}) {
-  const history = useNavigate();
+function OffCanvasExample({name, shown, showEdit, handleScreenShot, user, ...props}) {
+    const history = useNavigate();
 
-  const [show, setShow] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+    const [show, setShow] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-  const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
 
-  async function share(){
-    setShowAlert(true);
-    navigator.clipboard.writeText(document.location.href + "public?user=" + window.localStorage.getItem("user"));
-    await sleep(2000);
-    setShowAlert(false);
-  };
+    async function share() {
+        setShowAlert(true);
+        await navigator.clipboard.writeText(document.location.href + "/#/public?user=" + user.displayName);
+        await sleep(2000);
+        setShowAlert(false);
+    }
 
-  const handleShowEdit = () => {
+    const handleShowEdit = () => {
     showEdit();
     handleClose();
   }
 
-  const handleSignOut = (e) => {
-    handleClose();
-    signOut(auth).then(() => {
-      history('/LoginPage')
-    }).catch((error) => {
-      alert(error);
-    });
-  }
-  
-  const changeBarz = (e) => {
-    handleClose();
-    history('/public?user=barz');
-    window.location.reload();
-  }
+    const handleSignOut = () => {
+        handleClose();
+        signOut(auth).then(() => {
+            history('/LoginPage')
+        }).catch((error) => {
+            alert(error);
+        });
+    }
+
 
 
   return (
@@ -97,7 +92,8 @@ export default function Topnav(props) {
   return (
     <>
       {['top'].map((placement, idx) => (
-          <OffCanvasExample handleScreenShot={props.handleScreenShot} showEdit={props.showEdit} key={idx}
+          <OffCanvasExample handleScreenShot={props.handleScreenShot} user={props.user} showEdit={props.showEdit}
+                            key={idx}
                             placement={placement} name={placement}/>
       ))}
     </>
