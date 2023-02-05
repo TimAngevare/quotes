@@ -154,16 +154,17 @@ const App = () => {
         <Row className="flex-grow-1">
           <QuoteContainer dataBase={dataBase} quote={barz[ranInt].data}/>
         </Row>
-
+        <Col className='text-center'>
+          {!screenShot &&
+              <Button onClick={genRanInt}>Refresh</Button>}
+        </Col>
         <Row className="flex-grow-1">
-          <Col xs={2} lg={"auto"} className="bottom">
+          <Col xs={6} lg={"auto"} className="bottom">
             <Corner rotation="270"/>
           </Col>
-          <Col className='text-center'>
-            {!screenShot &&
-                <Button onClick={genRanInt}>Refresh</Button>}
+          <Col>
           </Col>
-          <Col xs={2} lg={"auto"}>
+          <Col xs={6} lg={"auto"}>
             <Corner rotation="180"/>
           </Col>
         </Row>
