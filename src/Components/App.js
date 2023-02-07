@@ -115,7 +115,7 @@ const App = () => {
       <Container fluid id="capture">
         <UseScreenOrientation/>
         <Row className="flex-grow-1">
-          <Col xs={2} lg={"auto"}>
+          <Col xs={4} lg={"auto"} xl={3}>
             <Corner rotation="0"/>
           </Col>
           <Col className='text-center'>
@@ -146,7 +146,7 @@ const App = () => {
                 </svg>
             }
           </Col>
-          <Col xs={2} lg={"auto"}>
+          <Col xs={4} lg={"auto"} xl={3}>
             <Corner rotation="90"/>
           </Col>
         </Row>
@@ -159,12 +159,12 @@ const App = () => {
               <Button onClick={genRanInt}>Refresh</Button>}
         </Col>
         <Row className="flex-grow-1">
-          <Col xs={6} lg={"auto"} className="bottom">
+          <Col xs={4} lg={"auto"} xl={3}>
             <Corner rotation="270"/>
           </Col>
           <Col>
           </Col>
-          <Col xs={6} lg={"auto"}>
+          <Col xs={4} lg={"auto"} xl={3}>
             <Corner rotation="180"/>
           </Col>
         </Row>
