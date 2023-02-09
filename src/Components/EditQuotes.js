@@ -5,7 +5,7 @@ import {Alert, Button, CloseButton, Col, Form, Modal, Row} from "react-bootstrap
 
 export default function EditQuotes(props) {
     const [barz, setBarz] = useState(props.database);
-    const [prevbarz, setPrevBarz] = useState(props.database);
+    const prevbarz = [...props.database];
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("")
 
@@ -18,8 +18,7 @@ export default function EditQuotes(props) {
     }
 
     useEffect(() => {
-        setBarz(props.database);
-        setPrevBarz(props.database);
+        setBarz(JSON.parse(JSON.stringify(props.database)));
     }, [props.database]);
 
     async function handleSave(e) {
@@ -33,6 +32,7 @@ export default function EditQuotes(props) {
                 setLoading(false);
                 return null;
             } else if (bar.data['quote'] !== prevbarz[i].data['quote'] || bar.data['author'] !== prevbarz[i].data['author']) {
+                console.log("working");
                 await setDoc(doc(db, props.user.displayName, bar.id), {
                     quote: bar.data['quote'],
                     author: bar.data['author']
@@ -65,7 +65,7 @@ export default function EditQuotes(props) {
 
     const handleChange = (e, index, type) => {
         setError("");
-        setPrevBarz([barz]);
+        // setPrevBarz([barz]);
         const newBarz = [...barz];
         newBarz[index].data[type] = e.target.value;
         setBarz(newBarz);
@@ -114,7 +114,7 @@ export default function EditQuotes(props) {
                         </Col>
                     </Row>
                     {barz.map(bar => (
-                        <div>
+                        <div key={bar.id}>
                             <h2></h2>
                             {bar.id !== undefined &&
                                 <Row key={bar.id} my={3}>

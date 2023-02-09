@@ -4,7 +4,6 @@ import Corner from './Corner';
 import Topnav from './Topnav';
 import {Alert, Button, Col, Container, Row} from 'react-bootstrap';
 import {getAuth} from "firebase/auth";
-import UseScreenOrientation from './UseScreenOrientation';
 import {useEffect, useState} from 'react';
 import {db} from '../Firebase';
 import {collection, onSnapshot} from 'firebase/firestore';
@@ -113,7 +112,7 @@ const App = () => {
         <CsvReadWrite showImportCSV={showImportCSV} handleImportCSV={handleImportCSV} user={user}/>
       </div>
       <Container fluid id="capture">
-        <UseScreenOrientation/>
+        {/*<UseScreenOrientation/>*/}
         <Row className="flex-grow-1">
           <Col xs={4} lg={"auto"} xl={3}>
             <Corner rotation="0"/>
