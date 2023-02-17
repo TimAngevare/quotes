@@ -22,7 +22,7 @@ function OffCanvasExample({name, shown, showEdit, handleScreenShot, user, ...pro
 
     async function share() {
         setShowAlert(true);
-        await navigator.clipboard.writeText(document.location.href + "/#/public?user=" + user.displayName);
+        await navigator.clipboard.writeText(document.location.href + "public?user=" + user.displayName);
         await sleep(2000);
         setShowAlert(false);
     }

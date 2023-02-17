@@ -4,7 +4,6 @@ import {auth, db} from '../Firebase'
 import {createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
 import {Link, useNavigate} from 'react-router-dom';
 import logo from '../img/Quotes.png';
-import Wave from "./Wave";
 import {doc, getDoc, setDoc} from 'firebase/firestore';
 
 export default function SignupPage() {
@@ -102,7 +101,6 @@ export default function SignupPage() {
             <div className="w-100 text-center mt-2">
                 Already have an account? <Link to="/LoginPage">Log In</Link>
             </div>
-            <Wave/>
         </div>
     );
 }

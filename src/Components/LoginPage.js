@@ -3,7 +3,6 @@ import {Alert, Button, Card, Form, Modal} from 'react-bootstrap';
 import {auth} from '../Firebase'
 import {getAuth, sendPasswordResetEmail, signInWithEmailAndPassword} from "firebase/auth";
 import {Link, useNavigate} from 'react-router-dom';
-import Wave from "./Wave";
 import logo from '../img/Quotes.png';
 
 
@@ -120,7 +119,6 @@ export default function LoginPage() {
             <div className="w-100 text-center mt-2">
                 <Button onClick={handleOpen}>Forgot password?</Button>
             </div>
-            <Wave/>
         </div>
     );
 }
